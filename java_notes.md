@@ -12,6 +12,7 @@ Date: 28/05/2022
 
 * [Java Programming Masterclass](https://www.udemy.com/course/java-the-complete-java-developer-course/)
 * Thinking in Java, Bruce Eckel
+* [CLearningPath notes](https://github.com/hadjShell/CLearningPath)
 
 ***
 
@@ -55,7 +56,7 @@ Date: 28/05/2022
 
 * Java is case-sensitive
 
-### Variable and Constant
+### Variables
 
 * Three types of variables
 
@@ -69,16 +70,17 @@ Date: 28/05/2022
 
 * Data type
 
-  * Primitive data type
+  * **Primitive data type**
     * `boolean`, `byte`, `short`, `int`, `long`, `float`, `double`, `char`
     * Overflow and underflow
     * Casting
     * `BigDecimal` class overcomes the precision issues of the floating number types
     * `char` in Java is 2 bytes to allow you to store Unicode characters
       * e.g. `'\u0040' == 'A'`
-    * 
-  * Wrapper class
-    *  Java use the concept of a Wrapper class for all eight primitive types
+  * **Class data type**
+    * Wrapper class
+      *  Java use the concept of a Wrapper class for all eight primitive types
+    * String
 
 * Declaration and Initialisation
 
@@ -89,4 +91,66 @@ Date: 28/05/2022
 
 ### Operators
 
-* 
+* Operator and operand
+* Mathematical operators
+  * Only overriding operator in Java: `+`, `+=`
+    * Other data type variables will be automatically casted to a string
+* Assignment operator
+* Abbreviating operators
+* `++`, `--`
+* Relational operators
+* Logical operators
+* Bitwise operators
+* Ternary `if-else` operator
+* Casting operators
+* `,`
+* Operator precedence
+
+### Expressions and Statements
+
+* Expression is formed by combining variables, literals, method return values and operators
+* Statement is an executable line or code block
+* Code organisation: whitespace and indentation
+
+### Flow control
+
+* `if-else`
+* `switch`
+  * `String` can be used
+* `while`
+* `do while`
+* `for`
+  * `fori`
+  * `foreach`
+
+### Method
+
+* Functions in Java
+* Java is pass-by-value
+* return value `-1` conventionally indicates an error or non-successful operations
+* Method Overloading
+  * Methods have the same name, but take a unique list of argument types
+  * Overloaded methods cannot differ only by return type
+
+
+
+
+
+
+
+
+
+
+
+
+
+* Parsing values from a string
+
+  * Parsing methods in wrapper class
+
+    ```java
+    String strNum = "2048";
+    int num = Integer.parseInt(strNum);
+    ```
+
+    
