@@ -73,7 +73,6 @@ Date: 28/05/2022
   * **Primitive data type**
     * `boolean`, `byte`, `short`, `int`, `long`, `float`, `double`, `char`
     * Overflow and underflow
-    * Casting
     * `BigDecimal` class overcomes the precision issues of the floating number types
     * `char` in Java is 2 bytes to allow you to store Unicode characters
       * e.g. `'\u0040' == 'A'`
@@ -81,6 +80,7 @@ Date: 28/05/2022
     * Wrapper class
       *  Java use the concept of a Wrapper class for all eight primitive types
     * String
+  * Casting
 
 * Declaration and Initialisation
 
@@ -321,11 +321,41 @@ Date: 28/05/2022
 
 ### Array
 
+* Initialisation
+  * `<type>[] varArr = new <type>[size];`
+    * All elements will be initialized to `0`, `false`, or `null`
+  * `<type>[] varArr = {element1, element2, }`
+    * Must combine with the declaration
+  * For loop
+* Array is an object
+* Array has a field `length`
+* Arrays utilities
+  * Built-in library: `Arrays`
+  * `Arrays.copyOf(<type>[], int)`
+  * `Arrays.toString()`
 
+### List
 
+* An ordered collection (a sequence)
 
+### ArrayList
 
-
+* Resizable-array implementation of the `List` interface
+* `ArrayList` is a class
+* [Interfaces](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ArrayList.html)
+  * `add(E)` --- Append the element to the end of the list
+  * `size()`
+  * `get(int)` --- Returns the element at the specified position in this list
+  * `set(int, E)` --- Replaces the element at the specified position in this list with the specified element
+  * `remove(int)` --- Removes the element at the specified position
+  * `contains(Object)` --- Returns `true` if this list contains the specified element
+  * `indexOf(Object)` --- Returns the index of the first occurrence of the specified element in this list, or -1 if this list does not contain the element
+  * Copy an `ArrayList`
+    * `addAll(Collection)` --- Appends all of the elements in the specified collection to the end of this list, in the order that they are returned by the specified collection's Iterator
+    * `ArrayList<E> copy = new ArrayList<E>(originalArrayList)`
+  * `toArray(T[])` --- Returns an array containing all of the elements in this list in proper sequence (from first to last element); the runtime type of the returned array is that of the specified array
+    * With no argument, it will return a `Object` array
+  * 
 
 
 
