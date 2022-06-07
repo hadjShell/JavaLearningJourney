@@ -1,3 +1,5 @@
+package phone;
+
 import java.util.ArrayList;
 
 public class MobilePhone {
@@ -45,7 +47,7 @@ public class MobilePhone {
     }
 
     public void printContacts() {
-        System.out.println("Contact List: ");
+        System.out.println("phone.Contact List: ");
         int num = 1;
         for (Contact c : myContacts) {
             System.out.printf("%d. %s -> %s\n", num++, c.getName(), c.getPhoneNumber());

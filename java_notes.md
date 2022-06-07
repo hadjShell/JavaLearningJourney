@@ -334,16 +334,61 @@ Date: 28/05/2022
   * `Arrays.copyOf(<type>[], int)`
   * `Arrays.toString()`
 
+### Iterator
+
+* Implementation details in source code
+
+* The iterators returned by the class's [`iterator`](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ArrayList.html#iterator()) and [`listIterator`](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ArrayList.html#listIterator(int)) methods are *fail-fast*: if the list is structurally modified at any time after the iterator is created, in any way **except through the iterator's own [`remove`](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ListIterator.html#remove()) or [`add`](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ListIterator.html#add(E)) methods**, the iterator will throw a [`ConcurrentModificationException`](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ConcurrentModificationException.html). Thus, in the face of concurrent modification, the iterator fails quickly and cleanly, rather than risking arbitrary, non-deterministic behavior at an undetermined time in the future
+
+* *The fail-fast behavior of iterators should be used only to detect bugs*
+
+* Usage
+
+  ```java
+  Iterator<E> i = collection.iterator();
+  while(i.hasNext())
+      System.out.println(i.next());
+  ```
+
+> ```java
+> // next() logically equivalent to *p++
+> public boolean hasNext() {	return cursor != size; }
+> ```
+
+* Iterator is implemented as a private inner class in each collection class implementation
+
 ### List
 
 * An ordered collection (a sequence)
+
+* More flexible iterator: `listIterator()`
+
+  * Can move back
+
+    * `previous()`
+
+      > `previous() logically equivalent to *(p--)`
+
+    * `hasPrevious()`
+
+      ```java
+      public boolean hasPrevious() {	return cursor != 0; }
+      ```
+
+  * **Use a `boolean` variable `goForward` to guard your operations**
+
+    > As the implementations of `next()` and `previous()` are slightly logically different
+
+  * After `remove()` the element, should move the `cursor` by `next()` or `previous` (with validation), otherwise two continuous `remove()` will throw `IllegalStateException` (because `lastRet` is set to `-1` after a `remove()` operation, see the source code for details)
 
 ### ArrayList
 
 * Resizable-array implementation of the `List` interface
 * `ArrayList` is a class
+* Cannot store primitive type variables
 * [Interfaces](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ArrayList.html)
   * `add(E)` --- Append the element to the end of the list
+  * `add(int, E)` --- Inserts the specified element at the specified position in this list
   * `size()`
   * `get(int)` --- Returns the element at the specified position in this list
   * `set(int, E)` --- Replaces the element at the specified position in this list with the specified element
@@ -355,13 +400,36 @@ Date: 28/05/2022
     * `ArrayList<E> copy = new ArrayList<E>(originalArrayList)`
   * `toArray(T[])` --- Returns an array containing all of the elements in this list in proper sequence (from first to last element); the runtime type of the returned array is that of the specified array
     * With no argument, it will return a `Object` array
-  * 
 
+### LinkedList
 
+* Doubly-linked list implementation of the `List` and `Deque` interfaces
+* Suitable for large list with lots of insertion and deletion
+* [Interfaces](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/LinkedList.html)
+  * `getFirst()` --- Returns the first element in this list
+  * `getLast()` --- Returns the last element in this list
 
-* Parsing values from a string
+***
 
-  * Parsing methods in wrapper class
+## Wrapper Class
+
+* Java supports primitive types using classes
+
+* Initialisation
+
+  * `Integer myInteger = new Integer(56);`
+  * `Integer myInteger = 56;`
+    * Will be converted to `Integer myInteger = Integer.valueOf(56);` at compile time
+  * `int myInt = myInteger`
+    * Will be converted to `int myInt = myInteger.intValue()`
+  
+* Interfaces
+
+  * Autoboxing --- `Integer.valueOf(int)`
+
+  * Unboxing --- `intValue()`
+
+  * Parsing values from a string
 
     ```java
     String strNum = "2048";
