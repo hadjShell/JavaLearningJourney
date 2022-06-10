@@ -6,9 +6,9 @@ public class Practice {
 
 
     public static void main(String[] args) {
-        ArrayList<String> l = new ArrayList<String>();
-        l.add("Hello");
-        String[] a = new String[l.size()];
-        a = l.toArray(a);
+        Integer i = null;
+        System.out.println(i);
+        String s = "abc";
+
     }
 }
