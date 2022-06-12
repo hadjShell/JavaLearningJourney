@@ -362,7 +362,70 @@ Date: 28/05/2022
 
 ## Inner Class
 
-* 
+* Place a class definition within another class definition
+
+* Need an outer class instance to create the inner class instance (the inner class is **non-static**)
+
+  ```java
+  // Inner class is public
+  Outer outer = new Outer();
+  Outer.Inner inner = outer.new Inner();
+  ```
+
+* If you want to make an object of the inner class anywhere except from within a non-static method of the outer class, you must specify the type of the object as `OuterClass.InnerClass`
+
+* Inner class object can access the members of the outer object (the inner class object (non-static) captures a reference to the outer class object that was responsible for creating it)
+
+* Produce the reference to the outer class object within the inner class definition: `OuterClassName.this`
+
+* Ordinary inner class cannot have `static` members or nested classes
+
+* Local class: an inner class within the scope of a method
+
+* Anonymous class
+
+* Nested class: `static` inner class
+
+  * Class inside interface
+
+* Why Inner Class?
+
+  * *Each inner class can independently inherit from an implementation. Thus, the inner class is not limited by whether the outer class is already inheriting from an implementation* (multiple implementation inheritance)
+  * The inner class can have multiple instances, each with its own state information that is independent of the information in the outer-class object
+  * In a single outer class you can have several inner classes, each of which implements the same interface or inherits from the same class in a different way
+  * Nature of the problem
+
+
+***
+
+## Generics
+
+* One of the most significant change in Java SE5
+
+* The concept of *parameterized types*: you tell what type you want to use, and it takes care of the details
+
+* ```java
+  // generic class or interface
+  public class ClassName<T> {}
+  public interface InterfaceName<A, B, C, D> {}
+  
+  // generic method
+  public <T> void func(T x) {}
+  ```
+
+* Java generics are implemented using *erasure*, which means that any specific type information is erased when you use a generic
+
+* Erasure is a compromise in the implementation of Java generics, reification would be a better choice if generics had been part of Java 1.0
+
+* Erasure ensures migration compatibility
+
+* Bounds
+
+  * Allow you to place constraints on the parameter types that can be used with generics
+
+  * ```java
+    public class ClassName<T extends BoundedClass> {}
+    ```
 
 ***
 

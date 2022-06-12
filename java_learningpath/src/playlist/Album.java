@@ -1,7 +1,7 @@
 package playlist;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.List;
 
 public class Album {
     private String name;
@@ -22,7 +22,7 @@ public class Album {
         return false;
     }
 
-    public boolean addToPlayList(int trackNumber, LinkedList<Song> playlist) {
+    public boolean addToPlayList(int trackNumber, List<Song> playlist) {
         Song addedSong = (trackNumber > 0 && trackNumber <= songs.size()) ? songs.get(trackNumber - 1) : null;
         if(addedSong != null) {
             playlist.add(addedSong);
@@ -31,7 +31,7 @@ public class Album {
         return false;
     }
 
-    public boolean addToPlayList(String title, LinkedList<Song> playlist) {
+    public boolean addToPlayList(String title, List<Song> playlist) {
         Song addedSong = findSong(title);
         if(addedSong != null) {
             playlist.add(addedSong);
