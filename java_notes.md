@@ -110,6 +110,15 @@ Date: 28/05/2022
 
 * Expression is formed by combining variables, literals, method return values and operators
 * Statement is an executable line or code block
+  * Declaration statement
+  * Expression statement
+    * Assignment expressions
+    * `++`, `--`
+    * Method calls
+    * Object creation
+
+  * Control flow statement
+
 * Code organisation: whitespace and indentation
 
 ### Flow control
@@ -446,6 +455,14 @@ Date: 28/05/2022
   * `Arrays.copyOf(<type>[], int)`
   * `Arrays.toString()`
 
+### Java Collections Framework
+
+![Collection-Framework-1](D:\OneDrive\NCL\Extracurricular content\Java\imgs\Collection-Framework-1.png)
+
+![Collection-Framework-2](D:\OneDrive\NCL\Extracurricular content\Java\imgs\Collection-Framework-2.png)
+
+![java_collection_api_diagram](D:\OneDrive\NCL\Extracurricular content\Java\imgs\java_collection_api_diagram.svg)
+
 ### Iterator
 
 * Implementation details in source code
@@ -468,6 +485,115 @@ Date: 28/05/2022
 > ```
 
 * Iterator is implemented as a private inner class in each collection class implementation
+
+### Collection
+
+* The root interface in the *collection hierarchy*
+* The JDK does not provide any direct implementations of this interface: it provides implementations of more specific sub-interfaces like Set and List. This interface is typically used to pass collections around and manipulate them where maximum generality is desired
+
+### Collections
+
+* Collections is a utility class
+* It defines several utility methods that operate on or return collections.
+* It contains only `static` methods
+* Some useful methods
+  * `sort()`
+  * `reverse()`
+  * `shuffle()`
+  * `min()`, `max()`
+  * `binarySearch()`
+  * `swap()`
+
+### Shallow Copy vs. Deep Copy
+
+* | Shallow Copy                                                 | Deep Copy                                                    |
+  | ------------------------------------------------------------ | ------------------------------------------------------------ |
+  | Shallow Copy stores the references of objects to the original memory address. | Deep copy stores copies of the object’s value.               |
+  | Shallow Copy reflects changes made to the new/copied object in the original object. | Deep copy doesn’t reflect changes made to the new/copied object in the original object. |
+  | Shallow Copy stores the copy of the original object and points the references to the objects. | Deep copy stores the copy of the original object and recursively copies the objects as well. |
+  | Shallow copy is faster.                                      | Deep copy is comparatively slower.                           |
+
+* Usage
+
+  * Shallow copy
+
+    ```java
+    Collection<T> copy = new Collection<>(original);
+    ```
+
+  * Deep copy
+
+    * Deep copy of Java class
+
+      * Implement the `clonable` interface and override the `clone()` method (inherited from `Object`) in the class of objects within the collection
+
+        > Note: `Object.clone()` is `native`
+        >
+        > Must implement `cloneable` to handle `CloneNotSupportedException`, more details referring to the Javadoc in the source code
+
+      * However, `clone()` is actually shallow copy not deep copy
+
+      * Therefore,
+
+        * All immutable fields or primitive fields can be used as it is. They don’t require any special treatment. e.g. primitive classes, wrapper classes and `String` class.
+        * For all mutable field members, we must create a new object of member and assign it’s value to cloned object.
+
+    * Deep copy of Java Collections
+
+      1. Create a new instance of collection
+      2. Clone all elements from given collection to clone collection
+
+    * [Example](https://howtodoinjava.com/java/collections/arraylist/arraylist-clone-deep-copy/)
+
+### Comparable and Comparator
+
+* Comparison is a common behavior
+
+* `Comparable` is an Interface with one interface `int compareTo(T o)`
+
+* This interface imposes a total ordering on the objects of each class that implements it. This ordering is referred to as the class's **natural ordering**, and the class's `compareTo` method is referred to as its natural comparison method
+
+* Lists (and arrays) of objects that implement this interface can be sorted automatically by `Collections.sort` (and `Arrays.sort`). Objects that implement this interface can be used as keys in a sorted map or as elements in a sorted set, without the need to specify a comparator
+
+* How to use `Comparable`?
+
+  * Implement the interface in the object class
+
+* `Comparator` is a functional Interface with two interfaces: `int compare(T o1, T o2)`, `boolean equals(Object obj)`
+
+  * Note that it is always safe **not** to override `Object.equals(Object)`. However, overriding this method may, in some cases, improve performance by allowing programs to determine that two distinct comparators impose the same order.
+
+* Comparators can be passed to a sort method (such as `Collections.sort` or `Arrays.sort`) to allow precise control over the sort order. Comparators can also be used to control the order of certain data structures (such as sorted sets or sorted maps), or to provide an ordering for collections of objects that don't have a natural ordering
+
+* When to use `Comparator`?
+
+  * The objects in collections don't have natural ordering. E.g. their class is provided in an external library without write permission
+
+  * The objects do have natural ordering but you want to sort it in a different logic
+
+    > **Parameter can also be treated as a logic**
+
+* How to use `Comparator`?
+
+  * Create an anonymous class implementing `Comparator` and pass it to the `sort`
+
+* Two types of `sort`
+
+  * ```java
+    public static <T extends Comparable<? super T>> void sort(List<T> list) {
+            list.sort(null);
+        }
+    ```
+
+  * ```java
+    public static <T> void sort(List<T> list, Comparator<? super T> c) {
+            list.sort(c);
+        }
+    ```
+
+* [Extra explanation](https://www.youtube.com/watch?v=oAp4GYprVHM)
+
+* Inconsistency with equals issue
 
 ### List
 
@@ -493,7 +619,7 @@ Date: 28/05/2022
 
   * After `remove()` the element, should move the `cursor` by `next()` or `previous` (with validation), otherwise two continuous `remove()` will throw `IllegalStateException` (because `lastRet` is set to `-1` after a `remove()` operation, see the source code for details)
 
-### ArrayList
+#### ArrayList
 
 * Resizable-array implementation of the `List` interface
 * `ArrayList` is a class
@@ -513,13 +639,17 @@ Date: 28/05/2022
   * `toArray(T[])` --- Returns an array containing all of the elements in this list in proper sequence (from first to last element); the runtime type of the returned array is that of the specified array
     * With no argument, it will return a `Object` array
 
-### LinkedList
+#### LinkedList
 
 * Doubly-linked list implementation of the `List` and `Deque` interfaces
 * Suitable for large list with lots of insertion and deletion
 * [Interfaces](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/LinkedList.html)
   * `getFirst()` --- Returns the first element in this list
   * `getLast()` --- Returns the last element in this list
+
+### Map
+
+
 
 ***
 
