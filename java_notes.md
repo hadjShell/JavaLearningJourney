@@ -647,8 +647,24 @@ Date: 28/05/2022
   * `getFirst()` --- Returns the first element in this list
   * `getLast()` --- Returns the last element in this list
 
+### Queue
+
+### Set
+
 ### Map
 
+* An object that maps keys to values
+* Java map cannot contain duplicate keys, and each key can only map to at most one value
+* Great care must be exercised if mutable objects are used as map keys. The behavior of a map is not specified if the value of an object is changed in a manner that affects `equals` comparisons while the object is a key in the map. 
+* [Interfaces](https://docs.oracle.com/en/java/javase/12/docs/api/java.base/java/util/Map.html)
+  * `put(K key, V value)` --- Associates the specified value with the specified key in this map. Returns: the previous value associated with `key`, or `null` if there was no mapping for `key`.
+  * `get(Object key)` --- Returns the value to which the specified key is mapped, or `null` if this map contains no mapping for the key.
+  * `containsKey(Object key)` --- Returns `true` if this map contains a mapping for the specified key.
+  * `keySet()` --- Returns a `Set` view of the keys contained in this map.
+  * `remove(Object key)` --- Removes the mapping for a key from this map if it is present. Returns the value to which this map previously associated the key, or `null` if the map contained no mapping for the key.
+  * `remove(Object key, Object value)` --- Removes the entry for the specified key only if it is currently mapped to the specified value. Returns `true` if the value was removed.
+  * `replace(K key, V value)` --- Replaces the entry for the specified key only if it is currently mapped to some value. Returns the previous value associated with the specified key, or `null` if there was no mapping for the key.
+  * `replace(K key, V oldValue, V newValue)` --- Replaces the entry for the specified key only if currently mapped to the specified value. Returns `true` if the value was replaced.
 
 
 ***
