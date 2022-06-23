@@ -324,6 +324,23 @@ Date: 28/05/2022
     | no modifier | Y     | Y       | N                            | N     |
     | `private`   | Y     | N       | N                            | N     |
 
+### `Object`
+
+* The root of the class hierarchy
+* Every class is a subclass, direct or indirect, of the `Object` class
+* [Interfaces](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html)
+* Override `equals()` and `hashcode()`
+  * If two objects are equal according to the `equals(Object)` method, then calling the `hashCode` method on each of the two objects must produce the same integer result
+  * Default implementation of `equals()` simply tests `this.object == obj`
+  * If logical equivalent is important, override `equals()`
+  * **Principles**
+    * Reflexive
+    * Symmetric
+    * Transitive
+    * Consistent
+    * For non-null `x`, `x.equals(null) == false`
+  * When sub-classing, think about whether to use `instanceof` or `getClass()`
+
 ***
 
 ## Interfaces and Abstract Classes
@@ -454,6 +471,7 @@ Date: 28/05/2022
   * Built-in library: `Arrays`
   * `Arrays.copyOf(<type>[], int)`
   * `Arrays.toString()`
+  * `Arrays.asList(T[] array)`
 
 ### Java Collections Framework
 
@@ -503,6 +521,7 @@ Date: 28/05/2022
   * `min()`, `max()`
   * `binarySearch()`
   * `swap()`
+* For `getter`, `setter` and `constructor`, it is better to use a **copy** of the collection parameter to initialize the object field to ensure immutability
 
 ### Shallow Copy vs. Deep Copy
 
@@ -622,7 +641,6 @@ Date: 28/05/2022
 #### ArrayList
 
 * Resizable-array implementation of the `List` interface
-* `ArrayList` is a class
 * Cannot store primitive type variables
 * [Interfaces](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ArrayList.html)
   * `add(E)` --- Append the element to the end of the list
@@ -651,6 +669,33 @@ Date: 28/05/2022
 
 ### Set
 
+* A collection that contains no duplicate elements, and at most one `null` element. More formally, sets contain no pair of elements `e1` and `e2` such that `e1.equals(e2)`. No defined ordering
+* [Interfaces](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Set.html)
+  * `add(E e)`
+  * `remove(Object o)`
+  * `contains(Object o)`
+  * `size()`
+  * `isEmpty()`
+  * `addAll(Collection<? extends E> c)` --- Union
+  * `retainAll(Collection<? extends E> c)` --- Intersection
+  * `removeAll(Collection<? extends E> c)` --- Difference
+  * `containsAll(Collection<? extends E> c)` --- Is it a subset?
+* It is recommended to override the `equals` and `hashcode` if you store mutable objects in the set
+
+#### HashSet
+
+* This class implements the `Set` interface, backed by a hash table (actually a `HashMap` instance)
+* It makes no guarantees as to the iteration order of the set; in particular, it does not guarantee that the order will remain constant over time
+
+#### LinkedHashSet
+
+* Hash table and linked list implementation of the `Set` interface, with predictable iteration order
+* This linked list defines the iteration ordering, which is the order in which elements were inserted into the set (*insertion-order*)
+
+#### TreeSet
+
+* 
+
 ### Map
 
 * An object that maps keys to values
@@ -665,6 +710,20 @@ Date: 28/05/2022
   * `remove(Object key, Object value)` --- Removes the entry for the specified key only if it is currently mapped to the specified value. Returns `true` if the value was removed.
   * `replace(K key, V value)` --- Replaces the entry for the specified key only if it is currently mapped to some value. Returns the previous value associated with the specified key, or `null` if there was no mapping for the key.
   * `replace(K key, V oldValue, V newValue)` --- Replaces the entry for the specified key only if currently mapped to the specified value. Returns `true` if the value was replaced.
+
+#### HashMap
+
+* Hash table based implementation of the `Map` interface
+* This class makes no guarantees as to the order of the map; in particular, it does not guarantee that the order will remain constant over time
+
+#### LinkedHashMap
+
+* Hash table and linked list implementation of the `Map` interface
+* Insertion order
+
+#### TreeMap
+
+* 
 
 
 ***
@@ -694,4 +753,9 @@ Date: 28/05/2022
     int num = Integer.parseInt(strNum);
     ```
 
-    
+
+***
+
+## Debugging and Unit Testing
+
+* 

@@ -1,7 +1,7 @@
 package collections;
 
 public class Main {
-
+    public enum E {Planet};
     public static void main(String[] args) {
 	    Theatre theatre = new Theatre("Olympian", 8, 12);
 //        theatre.getSeats();
@@ -15,5 +15,10 @@ public class Main {
         } else {
             System.out.println("Sorry, seat is taken");
         }
+
+        Class<? extends Theatre> c = theatre.getClass();
+
+        E e = E.Planet;
+        System.out.println(e.hashCode());
     }
 }
