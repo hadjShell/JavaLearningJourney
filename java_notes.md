@@ -2,53 +2,36 @@
 Author: Jiayuan Zhang
 Version: 1.0
 Date: 28/05/2022
+Version: 2.0
+Date: 20/01/2024
 ---
 
 # Java Notes
 
 ***
 
-## Reference 
-
-* [Java Programming Masterclass](https://www.udemy.com/course/java-the-complete-java-developer-course/)
-* Thinking in Java, Bruce Eckel
-* [CLearningPath notes](https://github.com/hadjShell/CLearningPath)
-
-***
-
 ## Introduction
 
-### JDK
+* ![Java](imgs/Java.png)
 
-* Java development tool or SDK (software development tool)
-* Libraries
-* Also has a debugger
-* JDK 11 - LTS version
-* Versions of JDK get released every 6 months
-* Release a LTS version every 3 years
+* JDK
 
-### Vendors
+  * Java development toolkit
 
-* Oracle
-  * Current owner of the Java language
-  * Commercial version
-  * OpenJDK version
-* Amazon Corretto
-  * Free
-* RedHat
-* Azul
+  * Versions of JDK get released every 6 months
 
-### JVM
+  * Release a LTS version every 3 years
 
-* HotSpot
-  * Most widely depolyed version of the JVM
-* Open J9
-  * A JVM alternative version
-  * Open source
-  * Use less memory and fast  under some circumstances
-* Zing
-  * Owned by Azul
-  * Non-free
+* Java is a hybrid language
+
+  * `javac` - compile
+  * `java` - interpret
+
+* JVM
+
+  * Java virtual machine
+  * Make Java platform independent
+  * ![JVM](imgs/JVM.png)
 
 ***
 
@@ -74,17 +57,17 @@ Date: 28/05/2022
     * `boolean`, `byte`, `short`, `int`, `long`, `float`, `double`, `char`
     * Overflow and underflow
     * `BigDecimal` class overcomes the precision issues of the floating number types
-    * `char` in Java is 2 bytes to allow you to store Unicode characters
+    * `char` in Java is *2 bytes* to allow you to store Unicode characters
       * e.g. `'\u0040' == 'A'`
   * **Class data type**
     * Wrapper class
-      *  Java use the concept of a Wrapper class for all eight primitive types
+      *  Java use Wrapper class for all eight primitive types
     * String
   * Casting
 
 * Declaration and Initialisation
 
-* Literal
+* Literals
 
   * **Good habit**: add appropriate data type suffix
 
@@ -214,7 +197,7 @@ Date: 28/05/2022
 
 * **"is-a"** relationship
 
-* Excepting `Object`, every class has one and only direct supercclass
+* Excepting `Object`, every class has one and only direct superclass
 
 * Inheritance chain
 
@@ -238,7 +221,7 @@ Date: 28/05/2022
   * Both of them can be used anywhere in a class except static areas, any attempt to do so will lead to compile-time errors
   * `this` is commonly used with constructors and setters
   * `super` is commonly used with method overriding
-  * `this()` call a constructor from another overloaded constructor in the same  class
+  * `this()` call a constructor from another overloaded constructor in the same class
   * `super()` call a parent constructor
   * Java compiler puts a default call to `super()` if we don't add it, and it's always the no-argument `super` which is inserted by compiler
   * A constructor can have a call to `super()` or `this()` but never both
@@ -759,3 +742,10 @@ Date: 28/05/2022
 ## Debugging and Unit Testing
 
 * 
+
+***
+
+## Reference 
+
+* Thinking in Java, Bruce Eckel
+* [CLearningPath notes](https://github.com/hadjShell/CLearningPath)
