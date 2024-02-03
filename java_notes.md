@@ -77,14 +77,14 @@ Date: 20/01/2024
 * Operator and operand
 * Mathematical operators
   * Only overriding operator in Java: `+`, `+=`
-    * Other data type variables will be automatically casted to a string
+    * Other data type variables will be automatically casted to a String
 * Assignment operator
 * Abbreviating operators
 * `++`, `--`
 * Relational operators
 * Logical operators
 * Bitwise operators
-* Ternary `if-else` operator
+* Ternary operator
 * Casting operators
 * `,`
 * Operator precedence
@@ -112,17 +112,86 @@ Date: 20/01/2024
 * `while`
 * `do while`
 * `for`
-  * `fori`
-  * `foreach`
+* `foreach`
 
 ### Method
 
 * Functions in Java
 * Java is pass-by-value
-* return value `-1` conventionally indicates an error or non-successful operations
+* Return `-1` conventionally indicates an error or non-successful operations
 * Method Overloading
   * Methods have the same name, but take a unique list of argument types
   * Overloaded methods **cannot** differ only by return type
+
+***
+
+## String
+
+* String is an object
+* String is immutable
+
+### Creating String
+
+* `String str = "Hello world!";`
+  * Point to an object in string pool
+* Constructors
+  * `String(char [])`
+  * `String(byte [])`
+  * `String(String)`
+  * Point to an object in heap
+
+### Common String Methods
+
+* `int length()`
+* `String toLowerCase()`
+* `String toUpperCase()`
+* `String trim()`
+* `String substring(int begin)`
+* `String substring(int begin, int end)`
+* `String replace(char old, char new)`
+* `String replaceAll(String regex, String replacement)`
+* `boolean startsWith(String s)`
+* `boolean endsWith(String s)`
+* `char charAt(int index)`
+* `int indexOf(char c)`
+* `int indexOf(String s)`
+* `int lastIndexOf(char c)`
+* `boolean equals(String s)`
+* `boolean equalsIgnoreCase(String s)`
+* `int compareTo(String s)`
+  * Compares two strings lexicographically
+* `String[] split(String regex)`
+* `String String.join(CharSequence delimiter, CharSequence... elements)`
+* `char[] toCharArray()`
+* `String String.valueOf(int i)`
+  * Convert other data type value to a string
+
+### Regualr Expression
+
+![regex-cheatsheet](imgs/regex-cheatsheet.jpg)
+
+### StringBuffer & StringBuilder
+
+* `StringBuffer`
+  * "Mutable String"
+  * `append()`, `insert()`
+  * Initially will have a size of 16 capacity
+  * It is thread-safe
+* `StringBuilder`
+  * Basically same as `StringBuffer`
+  * It is not thread-safe, but faster
+
+### Printing
+
+* ```java
+  // Only take one parameter
+  System.out.print()
+  System.out.println()
+    
+  // Formatted output
+  System.out.printf()
+  System.out.format()
+  ```
 
 ***
 
@@ -458,11 +527,11 @@ Date: 20/01/2024
 
 ### Java Collections Framework
 
-![Collection-Framework-1](D:\OneDrive\NCL\Extracurricular content\Java\imgs\Collection-Framework-1.png)
+![Collection-Framework-1](imgs\Collection-Framework-1.png)
 
-![Collection-Framework-2](D:\OneDrive\NCL\Extracurricular content\Java\imgs\Collection-Framework-2.png)
+![Collection-Framework-2](imgs\Collection-Framework-2.png)
 
-![java_collection_api_diagram](D:\OneDrive\NCL\Extracurricular content\Java\imgs\java_collection_api_diagram.svg)
+![java_collection_api_diagram](imgs\java_collection_api_diagram.svg)
 
 ### Iterator
 
