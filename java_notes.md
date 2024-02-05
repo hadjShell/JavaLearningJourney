@@ -116,12 +116,37 @@ Date: 20/01/2024
 
 ### Method
 
-* Functions in Java
-* Java is pass-by-value
-* Return `-1` conventionally indicates an error or non-successful operations
+* Function in Java
+
+* Java method is pass-by-value
+
 * Method Overloading
   * Methods have the same name, but take a unique list of argument types
-  * Overloaded methods **cannot** differ only by return type
+  * Overloaded methods **CANNOT** differ only by return type
+
+* Variable Arguments
+
+  * Variable numbers of inputs
+
+  * ```java
+    void show(int... x) {
+      for (int e : x)
+        System.out.println(e);
+    }
+    
+    // All valid
+    show();
+    show(10);
+    show(10, 20);
+    show(10, 20, 30);
+    int[] x = {1, 2, 3};
+    show(x);
+    ```
+
+* Command-line Arguments
+
+  * `String[] args` in `main()`
+
 
 ***
 
@@ -195,6 +220,23 @@ Date: 20/01/2024
 
 ***
 
+## Array
+
+* Initialisation
+  * `<type>[] varArr = new <type>[size];`
+    * All elements will be initialized to `0`, `false`, or `null`
+  * `<type>[] varArr = {element1, element2, };`
+    * Must combine with the declaration
+  * For loop
+* Array is an object
+* Array has a field `length`
+* Arrays utilities - `Arrays`
+  * `Arrays.copyOf(<type>[], int)`
+  * `Arrays.toString()`
+  * `Arrays.asList(T[] array)`
+
+***
+
 ## OOP
 
 ### Classes and Objects
@@ -203,7 +245,7 @@ Date: 20/01/2024
 
 * Class - fields and methods
 
-  Object - states and behaviors
+  Object - properties and behaviors
 
 * Constructors
 
@@ -217,7 +259,7 @@ Date: 20/01/2024
 
 * The `getter` and `setter` can also have additional validations instead of just setting or getting the fields values
 
-* Reference vs. object
+* Reference vs. Object
 
   * All other types which are not one of the primitive types are reference types
   * References --- pointers
@@ -255,14 +297,11 @@ Date: 20/01/2024
   * Final classes
     * Prevent the class from being inherited
 
-* Reusing classes
 
-  * Composition
-  * Inheritance
-  * Delegation
+### Reusing classes
 
 
-### Inheritance
+#### Inheritance
 
 * **"is-a"** relationship
 
@@ -272,7 +311,7 @@ Date: 20/01/2024
 
 * A subclass inherits all the members (fields, methods, and nested classes) from its super class
 
-* A subclass doesn't "inherit" the `private` members of its parent class
+* A subclass doesn't "inherit" (cannot directly access) the `private` members of its parent class
 
   > [A great discussion about this topic](https://www.zhihu.com/question/63183685)
 
@@ -330,11 +369,11 @@ Date: 20/01/2024
 
     * Must not throw a new or broader checked exception
 
-### Composition
+#### Composition
 
 * **"has-a"** relationship
 * Use class type variables as fields
-* Consider to use composition before inheritance
+* Consider to use composition prior to inheritance
 
 ### Encapsulation
 
@@ -350,31 +389,6 @@ Date: 20/01/2024
 
   * Follow exact **runtime type** of object to find the method
   * Must match compile time method signature to appropriate method in actual object's class
-
-### Access control
-
-* Package
-
-  * Create a library and import it
-    * Extract the package to `.jar` (Java ARchive) file in the project structure
-    * Import the `.jar` file into the new project libraries in the project structure
-
-* Scope
-
-* Access control
-
-  * At the top level: public or package-private (no explicit modifiers)
-
-  * At the member level: public, private, protected, or package-private
-
-  * A class declared with `public` is visible to all classes everywhere; A class with no modifier is visible only within its package
-
-  * | Modifier    | Class | Package | Subclass outside the package | World |
-    | ----------- | ----- | ------- | ---------------------------- | ----- |
-    | `public`    | Y     | Y       | Y                            | Y     |
-    | `protected` | Y     | Y       | Y                            | N     |
-    | no modifier | Y     | Y       | N                            | N     |
-    | `private`   | Y     | N       | N                            | N     |
 
 ### `Object`
 
@@ -398,6 +412,7 @@ Date: 20/01/2024
 ## Interfaces and Abstract Classes
 
 * Interfaces and abstract classes provide a more structured way to separate interface from implementation
+* Inheritance is specialisation; interface is generalisation
 
 ### Interfaces
 
@@ -435,6 +450,39 @@ Date: 20/01/2024
   * Expect unrelated classes will implement your interface
   * Want to specify the behavior of a particular data type, but not concern about who implements its behavior
   * Want to separate different behavior
+
+***
+
+## Access Control
+
+* Package
+
+  * A collection of classes, interfaces, or other packages
+  * `package`, `import`
+  * Create a library and import it
+    * Extract the package to `.jar` (Java ARchive) file in the project structure
+    * Import the `.jar` file into the new project libraries in the project structure
+
+* Scope
+
+* Naming Convention
+
+  * Reversed url
+
+* Access control
+
+  * At the top level: public or package-private (no explicit modifiers)
+
+  * At the member level: public, private, protected, or package-private
+
+  * A class declared with `public` is visible to all classes everywhere; A class with no modifier is visible only within its package
+
+  * | Modifier    | Class | Package | Subclass outside the package | World |
+    | ----------- | ----- | ------- | ---------------------------- | ----- |
+    | `public`    | Y     | Y       | Y                            | Y     |
+    | `protected` | Y     | Y       | Y                            | N     |
+    | no modifier | Y     | Y       | N                            | N     |
+    | `private`   | Y     | N       | N                            | N     |
 
 ***
 
@@ -508,22 +556,6 @@ Date: 20/01/2024
 ***
 
 ## Collections
-
-### Array
-
-* Initialisation
-  * `<type>[] varArr = new <type>[size];`
-    * All elements will be initialized to `0`, `false`, or `null`
-  * `<type>[] varArr = {element1, element2, }`
-    * Must combine with the declaration
-  * For loop
-* Array is an object
-* Array has a field `length`
-* Arrays utilities
-  * Built-in library: `Arrays`
-  * `Arrays.copyOf(<type>[], int)`
-  * `Arrays.toString()`
-  * `Arrays.asList(T[] array)`
 
 ### Java Collections Framework
 

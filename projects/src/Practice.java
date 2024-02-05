@@ -2,6 +2,8 @@ import java.lang.*;
 import java.util.Arrays;
 
 public class Practice {
+    private static String t;
+
     public static void main(String[] args) {
         String email = "john@gmail.com";
         System.out.println(Arrays.toString(email.split("@")));
@@ -14,6 +16,13 @@ public class Practice {
         String str = "a!b@c#1$2%3";
         System.out.println(String.join("",str.split("\\W")));
         System.out.println(str.replaceAll("\\W", ""));
+
+        int[] x = {1, 2, 3};
+        show(x);
+        show(10, 20, 30);
+
+        System.out.println(args.length);
+        System.out.println(t);
     }
 
     private static boolean checkBinaryForm(String s) {
@@ -22,5 +31,11 @@ public class Practice {
 
     private static boolean checkDateForm(String s) {
         return s.matches("^([0-3][0-9])/([0-1][0-9])/(\\d{4})$");
+    }
+
+    private static void show(int... x) {
+        for (int e : x) {
+            System.out.println(e);
+        }
     }
 }
