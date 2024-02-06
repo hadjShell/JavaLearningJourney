@@ -305,6 +305,8 @@ Date: 20/01/2024
 
 * **"is-a"** relationship
 
+* `extends`
+
 * Excepting `Object`, every class has one and only direct superclass
 
 * Inheritance chain
@@ -351,12 +353,6 @@ Date: 20/01/2024
 
   * Method overriding means defining a method in a child class that already exists in the parent class with same signature
 
-  * We can't override static methods only instance methods
-
-  * Constructors and private methods cannot be overridden
-
-  * Methods that are final cannot be overridden
-
   * Overriding rules
 
     * It must have same name and same arguments
@@ -365,8 +361,14 @@ Date: 20/01/2024
 
       > Covariant return types
 
-    * It can't have a lower access modifier
+    * We can't override static methods only instance methods
 
+    * Constructors and private methods cannot be overridden
+    
+    * Methods that are final cannot be overridden
+    
+    * It can't have a lower access modifier
+    
     * Must not throw a new or broader checked exception
 
 #### Composition
@@ -416,6 +418,7 @@ Date: 20/01/2024
 
 ### Interfaces
 
+* `implements`
 * An interface is a contract of what the classes **can** do
 * An abstract class taken to the extreme,thus more flexibility (complete decoupling)
 * Refer to different types of objects with one identical interface type
@@ -427,7 +430,13 @@ Date: 20/01/2024
 * Interface cannot be instantiated
 * Methods in interfaces are implicitly `public`
 * Fields in interfaces are implicitly constant (`public static final`)
+* Interface can have static methods
 * An interface can extend another interface
+* Interface can have `default` methods which can have method body
+  * Java 8 feature
+  * Make refactoring interface easier
+  * Java 9 allows `private` methods in interface that can be used in `default` methods inside interface
+
 
 ### Abstract Classes
 
@@ -436,6 +445,7 @@ Date: 20/01/2024
 * An abstract method is a method that is declared `abstract` without an implementation
 * Abstract class cannot be instantiated, but can be subclassed
 * When an abstract class is subclassed, the subclass usually provides implementations for all of the abstract methods in its superclass. However, if it doesn't, then the subclass must also be declared `abstract`
+* A subclass of a non-abstract superclass can be abstract
 
 ### Interfaces vs. Abstract Classes
 
@@ -490,7 +500,14 @@ Date: 20/01/2024
 
 * Place a class definition within another class definition
 
-* Need an outer class instance to create the inner class instance (the inner class is **non-static**)
+
+### Nested Inner Class
+
+* Inside the outer class, inner class can access the members of outer class directly
+
+* Inside the outer class, you can create inner class objects
+
+* If you want to make an object of the inner class anywhere except from within a non-static method of the outer class, you must specify the type of the object as `Outer.Inner`
 
   ```java
   // Inner class is public
@@ -498,28 +515,29 @@ Date: 20/01/2024
   Outer.Inner inner = outer.new Inner();
   ```
 
-* If you want to make an object of the inner class anywhere except from within a non-static method of the outer class, you must specify the type of the object as `OuterClass.InnerClass`
+* Produce the reference to the outer class object within the inner class definition: `Outer.this`
 
-* Inner class object can access the members of the outer object (the inner class object (non-static) captures a reference to the outer class object that was responsible for creating it)
-
-* Produce the reference to the outer class object within the inner class definition: `OuterClassName.this`
+* The inner class will be compiled to `Outer$Inner.class`
 
 * Ordinary inner class cannot have `static` members or nested classes
 
-* Local class: an inner class within the scope of a method
+### Local and Anonymous Inner Class
 
-* Anonymous class
+* Local inner class: an inner class defined inside a method
+* Anonymous inner class: an inner class defined at the time of creation of itself
+  * Useful when you want a class inheriting from a superclass or implementing an interface which only used in a specific method
 
-* Nested class: `static` inner class
 
-  * Class inside interface
+### Static Inner Class
 
-* Why Inner Class?
+* The static member of outer class
 
-  * *Each inner class can independently inherit from an implementation. Thus, the inner class is not limited by whether the outer class is already inheriting from an implementation* (multiple implementation inheritance)
-  * The inner class can have multiple instances, each with its own state information that is independent of the information in the outer-class object
-  * In a single outer class you can have several inner classes, each of which implements the same interface or inherits from the same class in a different way
-  * Nature of the problem
+### Why Inner Class?
+
+* *Each inner class can independently inherit from an implementation. Thus, the inner class is not limited by whether the outer class is already inheriting from an implementation* (multiple implementation inheritance)
+* The inner class can have multiple instances, each with its own state information that is independent of the information in the outer-class object
+* In a single outer class you can have several inner classes, each of which implements the same interface or inherits from the same class in a different way
+* Nature of the problem
 
 
 ***

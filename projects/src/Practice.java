@@ -1,8 +1,12 @@
 import java.lang.*;
 import java.util.Arrays;
 
+abstract class A {
+    public abstract void show();
+}
+
 public class Practice {
-    private static String t;
+    private static String t = "Hi";
 
     public static void main(String[] args) {
         String email = "john@gmail.com";
@@ -22,7 +26,9 @@ public class Practice {
         show(10, 20, 30);
 
         System.out.println(args.length);
-        System.out.println(t);
+
+        test();
+
     }
 
     private static boolean checkBinaryForm(String s) {
@@ -37,5 +43,16 @@ public class Practice {
         for (int e : x) {
             System.out.println(e);
         }
+    }
+
+    static public void test() {
+        int i = 100;
+        A a = new A(){
+            public void show() {
+                System.out.println(i);
+                System.out.println(t);
+            }
+        };
+        a.show();
     }
 }
