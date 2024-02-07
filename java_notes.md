@@ -277,23 +277,23 @@ Date: 20/01/2024
   * `static` methods can't access instance methods and instance variables directly, and can't use `this` keyword
   * If a method doesn't use instance variables that method should be declared as a static method
   * Referring to static fields or methods with an object instance is not encouraged
+  * `static` block: a code block that will be executed before the creation of any object of that class
 
 * `final` keyword
 
-  * Final data
+  * Final variables
     * `final` means a value cannot be changed **after** initialisation at run-time
       * Blank finals -> a final field inside a class can be different from each other, and yet it remains its immutable quality
 
     * `static final` means compile-time constant
-      * static initializers
-
+    
   * Final arguments
     * Inside the method you cannot change the argument
-
+  
   * Final methods
     * Prevent the method being overridden by the subclass
     * Any private methods in a class are implicitly `final`
-
+  
   * Final classes
     * Prevent the class from being inherited
 
@@ -430,7 +430,7 @@ Date: 20/01/2024
 * Interface cannot be instantiated
 * Methods in interfaces are implicitly `public`
 * Fields in interfaces are implicitly constant (`public static final`)
-* Interface can have static methods
+* Interface can have `static` methods
 * An interface can extend another interface
 * Interface can have `default` methods which can have method body
   * Java 8 feature
@@ -539,6 +539,120 @@ Date: 20/01/2024
 * In a single outer class you can have several inner classes, each of which implements the same interface or inherits from the same class in a different way
 * Nature of the problem
 
+
+***
+
+## Exception Handling
+
+### Type of Errors
+
+* Syntax error
+  * Identified by compiler
+* Logical error
+  * Identified by debugging
+* Runtime error - Exception
+  * Bad inputs
+  * Unavailable resources
+
+
+### `Exception` Class
+
+* Methods
+
+  * `String getMessage()`
+
+  * `String toString()`
+
+  * `void printStackTrace()`
+    * Prints this throwable and its backtrace to the standard error stream
+
+* 
+  ```mermaid
+  graph TD
+  A[Object] --> B[Throwable]
+  B --> C[Exception]
+  B --> D[Error]
+  C --> E[ClassNotFoundException]
+  C --> F[IOException]
+  C --> G[InterruptedException]
+  C --> H[NumberFormatException]
+  C --> R[RuntimeException]
+  R --> I[ArithmeticException]
+  R --> J[IndexOutOfBoundException]
+  R --> K[NullPointerException]
+  ```
+
+* Checked exceptions: you must handle them at compile time
+
+* Special case: `RuntimeException`
+
+  * Unchecked exceptions: you don't have to handle them
+  * They’re always **thrown automatically** by Java and you don’t need to include them in your exception specifications
+  * If a `RuntimeException` gets all the way out to `main( )` **without being caught**, `printStackTrace( )` is called for that exception as the program exits; the output is reported to `System.err`
+
+* Creating your own exceptions
+
+  * ```java
+    class MinBalanceException extends Exception {
+      public String toString() {
+        return "Minimal balance should be 5000. Try again!"
+      }
+    }
+    ```
+
+### How to Handle Exceptions
+
+* ```java
+  try {
+    // logic that might generate exceptions
+  } catch () {
+    // handling exception if it occurs
+  } finally {
+    // activities happen every time even if a method is returned
+    // cleanup
+  }
+  ```
+
+* There can be zero, one, or multiple `catch` blocks
+
+* `try catch` block can be nested
+
+* `finally` block is necessary when you need to set something other than memory (garbage collector is responsible for releasing heap memories) back to its original state (releasing resources)
+
+> Objects in heap are also resources, the real composition of the program are the references on stack
+
+* Try with resources - a Java 1.7 feature
+
+  * ```java
+    try (FileReader f = new FileReader(my.txt)) {
+      // use file
+      
+      return result;
+    }
+    
+    // no finally block
+    // For objects which implement AutoClosable interface
+    ```
+
+* Java supports termination exception handling instead of resumption
+
+* Throwing an exception
+
+  * `throw new Exception("");`
+  * Exceptions can be rethrown
+    * Happen in the `catch` block
+    * *Exception chaining*: Often you want to catch one exception and throw another, but still keep the information about the originating exception
+
+> There is a pitfall in Java Exception implementation: lost exception
+>
+> `return` inside `finally` block
+
+### Exception Specification
+
+* Politely tell the client programmer what exceptions the method throws, so the client programmer can handle them
+* `throws`
+* Unchecked exceptions can be omitted
+* The "exception specification interface" for a particular method may narrow during inheritance and overriding, but it may not widen—this is precisely the opposite of the rule for the class interface during inheritance
 
 ***
 
