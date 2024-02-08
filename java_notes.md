@@ -656,6 +656,75 @@ Date: 20/01/2024
 
 ***
 
+## Multiprogramming
+
+* Multiprogramming
+
+  * Running more than one programs on a single computer
+
+  * ```mermaid
+    graph TD
+    A[Multiprogramming] ---> B[Multi-users]
+    A ---> C[Multitasking]
+    C ---> D[Multithreading]
+    ```
+
+> Go read the Concurrency chapter of Thinking in Java
+
+* A Thread of execution is the smallest sequence of programmed instructions that can be managed independently
+* In many cases, a thread is a component of a process
+* Useful for web server, GUI, animation, etc.
+
+### How to Implement Multithreading
+
+1. `extends` or `implements`
+
+   * Depends on whether the subclass is inherited a superclass or not
+   * `Thread` class
+
+   * `Runnable` interface
+
+2. Overriding the `run()` method
+
+   * `run()` is the starting point of a thread
+
+3. Start the thread
+
+   * If `implements Runnable`, `Thread t = new Thread(new Object()); t.start();`
+   * If `extends Thread`, `o.start();`
+
+### `Thread` class
+
+* States of Thread
+  * ![thread-states](imgs/thread-states.png)
+* Thread priority
+  * Scheduler in JVM maintains a thread ready queue
+  * The exact behaviour depends on the JVM
+* Constructors
+  * `Thread()`
+  * `Thread(Runnable r)`
+  * `Thread(Runnable r, String name)`
+  * `Thread(ThreadGroup g, String name)`
+* Getter and setter
+  * `long getId()`
+  * `String getName()`
+  * `int getPriority()`
+  * `ThreadState getState()`
+  * `ThreadGroup getThreadGroup()`
+  * `void setName(String name)`
+  * `void setPriority(int p)`
+  * `void setDaemon(boolean b)`
+    * A daemon thread is the background thread with least priority
+    * An example: garbage collector
+* Enquiry methods
+  * `boolean isAlive()`
+  * `boolean isDaemon()`
+  * `boolean isInterrupted()`
+* Instance methods
+* Static methods
+
+***
+
 ## Generics
 
 * One of the most significant change in Java SE5
