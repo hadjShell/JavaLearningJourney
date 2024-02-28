@@ -1,7 +1,7 @@
 public class TestThread extends Thread {
     public void run() {
         while (true) {
-            System.out.println("HI");
+            System.out.println(this.getState());
         }
     }
 
@@ -9,7 +9,8 @@ public class TestThread extends Thread {
         TestThread t = new TestThread();
         t.start();
         while (true) {
-            System.out.println("WORLD");
+            System.out.println(t.getState());
+
         }
     }
 }

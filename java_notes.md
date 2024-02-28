@@ -53,18 +53,15 @@ Date: 20/01/2024
 
 * Data type
 
-  * **Primitive data type**
+  * *Primitive data type*
     * `boolean`, `byte`, `short`, `int`, `long`, `float`, `double`, `char`
     * Overflow and underflow
     * `BigDecimal` class overcomes the precision issues of the floating number types
     * `char` in Java is *2 bytes* to allow you to store Unicode characters
       * e.g. `'\u0040' == 'A'`
-  * **Class data type**
-    * Wrapper class
-      *  Java use Wrapper class for all eight primitive types
-    * String
+  * *Class data type*
   * Casting
-
+  
 * Declaration and Initialisation
 
 * Literals
@@ -273,7 +270,7 @@ Date: 20/01/2024
 * `static` keyword
 
   * Fields that have `static` modifier are called static fields or class variables
-  * They are associated with the class, rather than with any object. Every instance of the class stares a class variable, which is in one fixed location in memory
+  * They are associated with the class, rather than with any object. Every instance of the class shares a class variable, which is in one fixed location in memory
   * `static` methods can't access instance methods and instance variables directly, and can't use `this` keyword
   * If a method doesn't use instance variables that method should be declared as a static method
   * Referring to static fields or methods with an object instance is not encouraged
@@ -451,7 +448,7 @@ Date: 20/01/2024
 
 * Abstract Classes
   * Purpose is to **provide a common definition of a base class that multiple derived classes can share**
-  * Share code among several closely related classes
+  * Share code among several *closely* related classes
   * Expect classes that extend your abstract class to have many common methods or fields or required access modifier other than `public`
   * Want to declare non static or non final fields
   * Provide default implementations of certain methods but leave other methods open to being overridden
@@ -582,7 +579,7 @@ Date: 20/01/2024
   R --> K[NullPointerException]
   ```
 
-* Checked exceptions: you must handle them at compile time
+* Checked exceptions: you must handle them *at compile time*
 
 * Special case: `RuntimeException`
 
@@ -652,7 +649,7 @@ Date: 20/01/2024
 * Politely tell the client programmer what exceptions the method throws, so the client programmer can handle them
 * `throws`
 * Unchecked exceptions can be omitted
-* The "exception specification interface" for a particular method may narrow during inheritance and overriding, but it may not widen—this is precisely the opposite of the rule for the class interface during inheritance
+* The "exception specification interface" for a particular method may narrow during inheritance and overriding, but it may not widen
 
 ***
 
@@ -671,23 +668,20 @@ Date: 20/01/2024
 
 > Go read the Concurrency chapter of Thinking in Java
 
+* By multiprogramming CPU's idle time is minimised
 * A Thread of execution is the smallest sequence of programmed instructions that can be managed independently
 * In many cases, a thread is a component of a process
 * Useful for web server, GUI, animation, etc.
 
 ### How to Implement Multithreading
 
-1. `extends` or `implements`
-
+1. `extends` or `implements` or anonymous class
    * Depends on whether the subclass is inherited a superclass or not
    * `Thread` class
-
    * `Runnable` interface
-
 2. Overriding the `run()` method
 
    * `run()` is the starting point of a thread
-
 3. Start the thread
 
    * If `implements Runnable`, `Thread t = new Thread(new Object()); t.start();`
@@ -709,6 +703,7 @@ Date: 20/01/2024
   * `long getId()`
   * `String getName()`
   * `int getPriority()`
+    *  Default priority of a thread (`NORM_PRIORITY`) in Java is 5; `MIN_PRIORITY` is 1 and `MAX_PRIORITY` is 10
   * `ThreadState getState()`
   * `ThreadGroup getThreadGroup()`
   * `void setName(String name)`
@@ -721,7 +716,55 @@ Date: 20/01/2024
   * `boolean isDaemon()`
   * `boolean isInterrupted()`
 * Instance methods
+  * `void inerrupt()`
+  * `void join()`
+    * Wait for this thread to die
+
+  * `void join(long milli)`
+  * `void run()`
+  * `void start()`
+
 * Static methods
+  * `int activeCount()`
+    * Returns an estimate of the number of active threads in the current thread's `ThreadGroup` and its subgroups
+
+  * `Thread currentThread()`
+    * Returns a reference to the currently executing thread object.
+
+  * `void sleep(long milli)`
+    * Causes the currently executing thread to sleep
+
+  * `void yield()`
+    * A hint to the scheduler that the current thread is willing to yield its current use of a processor
+
+  * `void dumpStack()`
+    * Prints a stack trace of the current thread to the standard error stream
+
+
+### Synchronisation
+
+* Shared resources
+* Critical section
+* Mutual exclusion
+* Locking / mutex
+* Semaphore
+* Monitor
+* Race condition
+* Inter-thread communication
+* How Java achieve synchronisation
+  * Object monitor
+  * `sychronized`
+    * Guard the critical section
+  * Synchronised method
+  * Synchronised block
+* How Java achieve ITC
+  * `wait()` and `notify()`
+
+***
+
+## `Java.lang`
+
+
 
 ***
 

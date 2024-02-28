@@ -37,16 +37,39 @@ public class Stack {
         if (top == -1)            throw new StackUnderflowException();
         else if (top == SIZE)   throw new StackOverflowException();
     }
-}
 
-class StackOverflowException extends Exception {
-    public String getMessage() {
-        return "Stack overflow!";
+    static class StackOverflowException extends Exception {
+        public String getMessage() {
+            return "Stack overflow!";
+        }
+    }
+
+    static class StackUnderflowException extends Exception {
+        public String getMessage() {
+            return "Stack underflow!";
+        }
+    }
+
+    public static void main(String[] args) {
+        Stack s = new Stack();
+        System.out.println(s.pop());
+        System.out.println("---");
+        s.push(1);
+        s.push(2);
+        s.push(3);
+        s.push(4);
+        s.push(5);
+        System.out.println("---");
+        s.push(6);
+        System.out.println("---");
+        System.out.println(s.pop());
+        System.out.println(s.pop());
+        System.out.println(s.pop());
+        System.out.println(s.pop());
+        System.out.println(s.pop());
+        System.out.println("---");
+        System.out.println(s.pop());
     }
 }
 
-class StackUnderflowException extends Exception {
-    public String getMessage() {
-        return "Stack underflow!";
-    }
-}
+
