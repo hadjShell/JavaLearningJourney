@@ -2,8 +2,6 @@ import java.lang.*;
 import java.lang.annotation.Native;
 
 public class Practice {
-
-    @Native
     public static void main(String[] args) {
         Practice.show();
     }
