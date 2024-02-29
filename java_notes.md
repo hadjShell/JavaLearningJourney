@@ -389,23 +389,6 @@ Date: 20/01/2024
   * Follow exact **runtime type** of object to find the method
   * Must match compile time method signature to appropriate method in actual object's class
 
-### `Object`
-
-* The root of the class hierarchy
-* Every class is a subclass, direct or indirect, of the `Object` class
-* [Interfaces](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html)
-* Override `equals()` and `hashcode()`
-  * If two objects are equal according to the `equals(Object)` method, then calling the `hashCode` method on each of the two objects must produce the same integer result
-  * Default implementation of `equals()` simply tests `this.object == obj`
-  * If logical equivalent is important, override `equals()`
-  * **Principles**
-    * Reflexive
-    * Symmetric
-    * Transitive
-    * Consistent
-    * For non-null `x`, `x.equals(null) == false`
-  * When sub-classing, think about whether to use `instanceof` or `getClass()`
-
 ***
 
 ## Interfaces and Abstract Classes
@@ -572,7 +555,7 @@ Date: 20/01/2024
   C --> E[ClassNotFoundException]
   C --> F[IOException]
   C --> G[InterruptedException]
-  C --> H[NumberFormatException]
+  R --> H[NumberFormatException]
   C --> R[RuntimeException]
   R --> I[ArithmeticException]
   R --> J[IndexOutOfBoundException]
@@ -650,6 +633,8 @@ Date: 20/01/2024
 * `throws`
 * Unchecked exceptions can be omitted
 * The "exception specification interface" for a particular method may narrow during inheritance and overriding, but it may not widen
+
+> [A great article by Barry Ruzek around this topic](https://www.oracle.com/technical-resources/articles/enterprise-architecture/effective-exceptions-part1.html)
 
 ***
 
@@ -758,13 +743,144 @@ Date: 20/01/2024
   * Synchronised method
   * Synchronised block
 * How Java achieve ITC
-  * `wait()` and `notify()`
+  * `wait()`,  `notify()`, `notifyAll()`
 
 ***
 
 ## `Java.lang`
 
+* A default package which will be automatically imported
 
+### `Object`
+
+* The root of the class hierarchy
+* Every class is a subclass, direct or indirect, of the `Object` class
+* [Interfaces](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html)
+* Override `equals()` and `hashcode()`
+  * If two objects are equal according to the `equals()` method, then calling the `hashCode` method on each of the two objects must produce the same integer result
+  * Default implementation of `equals()` simply tests `this == obj`
+  * If logical equivalent is important, override `equals()`
+  * **Principles**
+    * Reflexive
+    * Symmetric
+    * Transitive
+    * Consistent
+    * For non-null reference `x`, `x.equals(null) == false`
+
+### Wrapper Class
+
+* Java supports primitive types using classes
+
+* Initialisation
+
+  * `Integer myInteger = new Integer(56);`
+  * `Integer myInteger = 56;`
+    * Will be converted to `Integer myInteger = Integer.valueOf(56);` at compile time
+  * `int myInt = myInteger`
+    * Will be converted to `int myInt = myInteger.intValue()`
+
+* Interfaces
+
+  * Autoboxing --- `Integer.valueOf(int)`
+
+  * Unboxing --- `intValue()`
+
+  * Parsing values from a string
+
+    ```java
+    String strNum = "2048";
+    int num = Integer.parseInt(strNum);
+    ```
+
+### `Math`
+
+* All static methods
+
+### `Enum`
+
+* Work like a class with static final fields, each identifier is an object
+* It can have a constructor but only `private` or default
+* It can also have other members
+
+### `Java.lang.reflect`
+
+* Helpful to get information of a class
+
+* ```java
+  Class c = My.class;
+  Class c1 = new My().getClass();
+  
+  c.getName();
+  c.getDeclaredFields();
+  c.getConstructors();
+  c.getMethods();
+  ```
+
+***
+
+## JavaDoc
+
+* Tags
+  * Class
+    * `@author`
+    * `@version`
+    * `@since`
+    * `@see`
+  * Method
+    * `@param`
+    * `@return`
+    * `@throws`
+    * `@exception`
+    * `@deprecated`
+    * `@code`
+  * Others
+    * `@link`
+    * `@value`
+    * `@serial`
+
+***
+
+## Annotations
+
+* Annotations provide information (*metadata*) that you need to fully describe your program to the compiler and JVM, but that cannot be expressed in Java
+
+* Built-in annotations
+
+  * Annotates the code
+    * `@Override`
+    * `@Deprecated`
+      * Methods can still be used
+    * `@SuppressWarnings()`
+      * To turn off inappropriate compiler warnings
+    * `@SafeVarargs`
+      * Useful for variable arguments
+      * Method must be `private` or `final`
+    * `@FunctionalInterface`
+      * Describe an interface that has only one method
+  * Annotates the annotation
+    * `@Retention(RetentionPolicy.CLASS)`
+      * Indicates how long annotations with the annotated type are to be retained
+    * `@Documented`
+      * Provides support to JavaDoc
+    * `@Target`
+      * Indicates the target of the annotation
+    * `@Inherited`
+      * Indicates the annocation can be used on subclasses
+    * `@Repeatable`
+      * Indicates the annotation can be used multiple times
+
+* User-defined annotations
+
+  * ```java
+    @interface MyAnno {
+      String name();
+      String date();
+      String version() default "1.0";
+    }
+    
+    @MyAnno(name="David", date="01/01/1970")
+    public MyClass {}
+    ```
 
 ***
 
@@ -1052,34 +1168,6 @@ Date: 20/01/2024
 #### TreeMap
 
 * 
-
-
-***
-
-## Wrapper Class
-
-* Java supports primitive types using classes
-
-* Initialisation
-
-  * `Integer myInteger = new Integer(56);`
-  * `Integer myInteger = 56;`
-    * Will be converted to `Integer myInteger = Integer.valueOf(56);` at compile time
-  * `int myInt = myInteger`
-    * Will be converted to `int myInt = myInteger.intValue()`
-  
-* Interfaces
-
-  * Autoboxing --- `Integer.valueOf(int)`
-
-  * Unboxing --- `intValue()`
-
-  * Parsing values from a string
-
-    ```java
-    String strNum = "2048";
-    int num = Integer.parseInt(strNum);
-    ```
 
 
 ***
