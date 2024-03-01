@@ -601,7 +601,9 @@ Date: 20/01/2024
 
 > Objects in heap are also resources, the real composition of the program are the references on stack
 
-* Try with resources - a Java 1.7 feature
+* Try with resources
+
+  * Java 1.7 feature
 
   * ```java
     try (FileReader f = new FileReader(my.txt)) {
@@ -937,6 +939,125 @@ Date: 20/01/2024
     | Reference to an instance method of a particular object       | `containingObject::instanceMethodName` | `myComparisonProvider::compareByName` `myApp::appendStrings2` |
     | Reference to an instance method of an arbitrary object of a particular type | `ContainingType::methodName`           | `String::compareToIgnoreCase` `String::concat`               |
     | Reference to a constructor                                   | `ClassName::new`                       | `HashSet::new`                                               |
+
+***
+
+## Java IO Streams
+
+* <img src="imgs/Stream.png" alt="Stream" style="zoom:33%;" />
+* Stack and method area is the **context** of a program; others are the resources
+* [`java.io` package hierarchy](https://docs.oracle.com/javase%2F9%2Fdocs%2Fapi%2F%2F/java/io/package-tree.html)
+
+### Stream
+
+* *Stream is a flow of data*
+* An *I/O Stream* represents an input source or an output destination
+* Streams support many different kinds of data, including simple bytes, primitive data types, localized characters, and objects
+* Some streams simply pass on data; others manipulate and transform the data in useful ways
+* The basic priciple
+  * A stream is a sequence of data
+  * A program uses an *input stream* to read data from a source, one item at a time
+  * A program uses an *output stream* to write data to a destination, one item at time
+
+### Byte Streams
+
+* Handle I/O of raw binary data
+* All byte stream classes are descended from `InputStream`and `OutputStream` (abstract class)
+* `InputStream` methods
+  * `int read()`
+    * Reads the next byte of data from the input stream
+    * The only abstract method
+    * Returns the next byte of data, or `-1` if the end of the stream is reached
+    * This method blocks until input data is available, end of file is detected, or an exception is thrown
+  * `int read(byte[] b)`
+    * Reads some number of bytes from the input stream and stores them into the buffer array `b`
+  * `int read(byte[]b, int off, int len)`
+    * Reads up to `len` bytes of data from the input stream into buffer array `b`
+    * The first byte read is stored into element `b[off]`, the next one into `b[off+1]`, and so on
+  * `int available()`
+    * Returns an estimate of the number of bytes that can be read (or skipped over) from this input stream without blocking or `0` when it reaches the end of the input stream
+  * `long skip(long n)`
+    * Skips over and discards `n` bytes of data from this input stream
+    * Returns the actual number of bytes skipped.
+  * `void mark(int limit)`
+    * Marks the current position in this input stream. A subsequent call to the `reset` method repositions this stream at the last marked position so that subsequent reads re-read the same bytes
+    * **Only works for buffered streams**
+  * `void reset()`
+    * Repositions this stream to the position at the time the `mark` method was last called on this input stream
+  * `boolean markSupported()`
+    * Tests if this input stream supports the `mark` and `reset` methods
+  * `void close()`
+    * Closes this input stream and releases any system resources associated with the stream
+* `OutputStream` methods
+  * `void write(int b)`
+    * Writes the specified byte to this output stream
+    * The byte to be written is the eight low-order bits of the argument `b`. The 24 high-order bits of `b` are ignored
+    * The only abstract method
+  * `void write(byte[] b)`
+    * Writes `b.length` bytes from the specified byte array to this output stream
+  * `void write(byte[] b, int off, int len)`
+    * Writes `len` bytes from the specified byte array starting at offset `off` to this output stream
+  * `void flush()`
+    * Flushes this output stream and forces any buffered output bytes to be written out
+    * **Only works for buffered streams**
+  * `void close()`
+    * Closes this output stream and releases any system resources associated with this stream
+* Hierarchy of byte streams
+  * ![java.io](imgs/java.io.png)
+* `ByteArrayInputStream` and `ByteArrayOutputStream`
+  * `ByteArrayInputStream(byte[] buf)`
+    * Creates a `ByteArrayInputStream` so that it uses `buf` as its buffer array
+  * `ByteArrayInputStream(byte[] buf, int offset, int length)`
+  * `byte[] readAllBytes()`
+    * Reads all remaining bytes from the input stream
+  * `long transferTo(OutputStream out)`
+    * Reads all bytes from this input stream and writes the bytes to the given output stream in the order that they are read
+    * Returns the number of bytes transferred
+  * `byte[] toByteArray()`
+  * `void writeTo(OutputStream out)`
+    * Writes the complete contents of this byte array output stream to the specified output stream argument
+* `FileInputStream` and `FileOutputStream`
+
+### Character Streams
+
+* Working with that Java stores character in 2 bytes
+* Character streams are often "wrappers" for byte streams
+* The character stream uses the byte stream to perform the physical I/O, while the character stream handles translation between characters and bytes
+* `Reader` methods
+  * `long transferTo(Writer out)`
+    * Reads all characters from this reader and writes the characters to the given writer in the order that they are read
+  * Don't have `available()`
+* `Writer` methods
+  * `Writer append(char c)`
+    * Appends the specified character to this writer
+  * `Writer append(CharSequence csq)`
+  * `Writer append(CharSequence csq, int start, int end)`
+* Hierarchy of character stream
+  * ![reader_writer](imgs/reader_writer.jpg)
+* `CharArrayReader` and `CharArrayWriter`
+* `FileReader` and `FileWriter`
+
+### Buffered Streams
+
+* For unbuffered steams, each read or write request is handled directly by the underlying OS
+* This can make a program much less efficient, since each such request often triggers disk access, network activity, or some other operation that is relatively expensive
+* Buffer
+  * A temporary memory object for holding the data
+  * The native APIs are called only when the buffer is **empty or full**
+  * It often makes sense to write out a buffer at critical points, without waiting for it to fill. This is known as *flushing* the buffer
+* A program can convert an unbuffered stream into a buffered stream using the *wrapping idiom*
+* `BufferedInputStream` and `BufferedOutputStream`
+* `BufferedReader` and `BufferedWriter`
+
+### Piped Streams
+
+### `StreamTokenizer`
+
+### `RandomAccessFile`
+
+### `File`
+
+### Exceptions
 
 ***
 
