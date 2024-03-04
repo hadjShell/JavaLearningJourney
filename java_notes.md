@@ -820,69 +820,46 @@ Date: 20/01/2024
 
 ***
 
-## JavaDoc
+## Date and Time API
 
-* Tags
-  * Class
-    * `@author`
-    * `@version`
-    * `@since`
-    * `@see`
-  * Method
-    * `@param`
-    * `@return`
-    * `@throws`
-    * `@exception`
-    * `@deprecated`
-    * `@code`
-  * Others
-    * `@link`
-    * `@value`
-    * `@serial`
-
-***
-
-## Annotations
-
-* Annotations provide information (*metadata*) that you need to fully describe your program to the compiler and JVM, but that cannot be expressed in Java
-
-* Built-in annotations
-
-  * Annotates the code
-    * `@Override`
-    * `@Deprecated`
-      * Methods can still be used
-    * `@SuppressWarnings()`
-      * To turn off inappropriate compiler warnings
-    * `@SafeVarargs`
-      * Useful for variable arguments
-      * Method must be `private` or `final`
-    * `@FunctionalInterface`
-      * Describe an interface that has only one method
-  * Annotates the annotation
-    * `@Retention(RetentionPolicy.CLASS)`
-      * Indicates how long annotations with the annotated type are to be retained
-    * `@Documented`
-      * Provides support to JavaDoc
-    * `@Target`
-      * Indicates the target of the annotation
-    * `@Inherited`
-      * Indicates the annocation can be used on subclasses
-    * `@Repeatable`
-      * Indicates the annotation can be used multiple times
-
-* User-defined annotations
-
-  * ```java
-    @interface MyAnno {
-      String name();
-      String date();
-      String version() default "1.0";
-    }
-    
-    @MyAnno(name="David", date="01/01/1970")
-    public MyClass {}
-    ```
+* Starting time: `1 Jan 1970`; starting year for a calendar: `1900`
+* Old APIs in `java.util`
+  * Keep timestamp in a `long` value in milliseconds
+  * Is mutable
+  * `java.util.Date` is deprecated
+  * `java.util.Calendar`
+    * An abstract class
+    * The standard calendar: `GregorianCalendar`
+  * `java.util.TimeZone`
+    * An abstract class
+* New APIs: Joda Date and Time APIs in `java.time`
+  * Date and time are separated
+  * Keep timestamp in seconds and nano seconds
+  * Is **immutable**
+  * `Instant`
+    * A timestamp
+  * `LocalDate`, `LocalTime`, `LocalDateTime`, `ZonedDateTime`, `ZoneID`
+  * `Duration`, `Period`
+    * A `Duration` is a simple measure of time along the time-line in nanoseconds
+    * A `Period`  expresses an amount of time in units meaningful to humans, such as years or days
+    * `between()`
+  * `Month`, `DayOfWeek`, `Year`, `YearMonth`, `MonthDay`, `OffsetTime`, `OffsetDateTime`, `ZoneOffset`
+  * Methods
+    * `of` - static factory method
+    * `now` - static factory method
+    * `parse` - static factory method focused on parsing
+    * `get` - gets the value of something
+    * `is` - checks if something is true
+    * `with` - the immutable equivalent of a setter
+    * `plus` - adds an amount to an object
+    * `minus` - subtracts an amount from an object
+    * `to` - converts this object to another type
+    * `at` - combines this object with another
+  * All calculations should check for numeric overflow and throw either an `ArithmeticException` or a `DateTimeException`
+  * `DateTimeFormatter`
+    * `ofPattern(String pattern)`
+    * [doc](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html)
+  * `ChronoField`
 
 ***
 
@@ -1346,6 +1323,72 @@ Date: 20/01/2024
 
 * 
 
+
+***
+
+## JavaDoc
+
+* Tags
+  * Class
+    * `@author`
+    * `@version`
+    * `@since`
+    * `@see`
+  * Method
+    * `@param`
+    * `@return`
+    * `@throws`
+    * `@exception`
+    * `@deprecated`
+    * `@code`
+  * Others
+    * `@link`
+    * `@value`
+    * `@serial`
+
+***
+
+## Annotations
+
+* Annotations provide information (*metadata*) that you need to fully describe your program to the compiler and JVM, but that cannot be expressed in Java
+
+* Built-in annotations
+
+  * Annotates the code
+    * `@Override`
+    * `@Deprecated`
+      * Methods can still be used
+    * `@SuppressWarnings()`
+      * To turn off inappropriate compiler warnings
+    * `@SafeVarargs`
+      * Useful for variable arguments
+      * Method must be `private` or `final`
+    * `@FunctionalInterface`
+      * Describe an interface that has only one method
+  * Annotates the annotation
+    * `@Retention(RetentionPolicy.CLASS)`
+      * Indicates how long annotations with the annotated type are to be retained
+    * `@Documented`
+      * Provides support to JavaDoc
+    * `@Target`
+      * Indicates the target of the annotation
+    * `@Inherited`
+      * Indicates the annocation can be used on subclasses
+    * `@Repeatable`
+      * Indicates the annotation can be used multiple times
+
+* User-defined annotations
+
+  * ```java
+    @interface MyAnno {
+      String name();
+      String date();
+      String version() default "1.0";
+    }
+    
+    @MyAnno(name="David", date="01/01/1970")
+    public MyClass {}
+    ```
 
 ***
 

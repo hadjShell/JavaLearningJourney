@@ -1,9 +1,15 @@
 import java.lang.*;
-import java.lang.annotation.Native;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoField;
 
 public class Practice {
     public static void main(String[] args) {
-        Practice.show();
+        LocalDateTime dt = LocalDateTime.now();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("LLLL dd y E hh:mm:ss");
+        System.out.println(dt.format(dtf));
+        System.out.println(dt.getChronology());
+
     }
 
     private static boolean checkBinaryForm(String s) {
