@@ -1007,6 +1007,7 @@ Date: 20/01/2024
 * `Writer` methods
   * `Writer append(char c)`
     * Appends the specified character to this writer
+    * `out.append(c)` behaves exactly the same as `out.write(c)`
   * `Writer append(CharSequence csq)`
   * `Writer append(CharSequence csq, int start, int end)`
 * Hierarchy of character stream
@@ -1017,22 +1018,124 @@ Date: 20/01/2024
 ### Buffered Streams
 
 * For unbuffered steams, each read or write request is handled directly by the underlying OS
+
 * This can make a program much less efficient, since each such request often triggers disk access, network activity, or some other operation that is relatively expensive
+
 * Buffer
+
   * A temporary memory object for holding the data
-  * The native APIs are called only when the buffer is **empty or full**
+  * The native input and output APIs are called only when the buffer is **empty or full**
   * It often makes sense to write out a buffer at critical points, without waiting for it to fill. This is known as *flushing* the buffer
+
 * A program can convert an unbuffered stream into a buffered stream using the *wrapping idiom*
+
+  * ```java
+    inputStream = new BufferedReader(new FileReader("xanadu.txt"));
+    outputStream = new BufferedWriter(new FileWriter("characteroutput.txt"));
+    ```
+
 * `BufferedInputStream` and `BufferedOutputStream`
+
 * `BufferedReader` and `BufferedWriter`
 
-### Piped Streams
+### Data Streams
 
-### `StreamTokenizer`
+### Object Streams
 
 ### `RandomAccessFile`
 
-### `File`
+* A random access file behaves like a large array of bytes stored in the file system
+
+* There is a kind of cursor, or index into the implied array, called the *file pointer*
+
+* Implements `DataInput` and `DataOutput`
+
+* Constructor
+
+  * `RandomAccessFile(File file, String mode)`
+
+  * `RandomAccessFile(String name, String mode)`
+
+  * | Value   | Meaning                                                      |
+    | :------ | :----------------------------------------------------------- |
+    | `"r"`   | Open for reading only. Invoking any of the `write` methods of the resulting object will cause an `IOException` to be thrown. |
+    | `"rw"`  | Open for reading and writing. If the file does not already exist then an attempt will be made to create it. |
+    | `"rws"` | Open for reading and writing, as with `"rw"`, and also require that every update to the file's content or metadata be written synchronously to the underlying storage device. |
+    | `"rwd"` | Open for reading and writing, as with `"rw"`, and also require that every update to the file's content be written synchronously to the underlying storage device. |
+
+* Methods
+
+  * `long getFilePointer()`
+    * Returns the current offset in this file
+  * `void seek(long pos)`
+    * Sets the file-pointer offset, measured from the beginning of this file, at which the next read or write occurs
+  * `long length()`
+    * Returns the length of this file, measured in bytes
+
+### Piped Streams
+
+* Communicate producer and consumer instead of using shared objects
+* Typically, data is written to a `PipedOutputStream` object by one thread and data is read from the connected `PipedInputStream` by some other thread
+* `connect()`
+
+### File I/O
+
+* `Path`
+
+  * A `Path` is **NOT** system independent
+
+  * You can think of the `Path` as storing these name elements as a sequence
+
+  * `Paths.get(String first, String... more)`
+
+    * Creating a `Path`
+
+    * ```java
+      Path p1 = Paths.get("/tmp/foo");
+      // Paths.get() is a shorthand of
+      Path p2 = FileSystems.getDefault().getPath("/tmp/foo");
+      ```
+
+  * `Path getFileName()`
+
+  * `Path getName(int index)`
+
+  * `int getNameCount()`
+
+  * `Path subpath(int beginIndex, int endIndex)`
+
+    * Not including a root element
+
+  * `Path getParent()`
+
+  * `Path getRoot()`
+
+  * `URI toUri()`
+
+  * `Path toAbsolutePath()`
+
+    * The file does not need to exist for this method to work
+
+  * `Path toRealPath(LinkOption... option)`
+
+    * If `true` is passed to this method and the file system supports symbolic links, this method resolves any symbolic links in the path
+    * If the `Path` is relative, it returns an absolute path
+    * If the `Path` contains any redundant elements, it returns a path with those elements removed
+    * This method throws an exception if the file does not exist or cannot be accessed
+
+  * `Path resolve(Path p)`
+
+  * `Path resolve(String s)`
+
+    * Join two paths
+
+  * `Path relativize(Path other)`
+
+    * Constructs a relative path between this path and a given path
+
+* `File`
+
+* `Files`
 
 ### Exceptions
 
@@ -1073,7 +1176,7 @@ Date: 20/01/2024
 
 ### Java Collections Framework
 
-![Collection-Framework-1](imgs\Collection-Framework-1.png)
+![Collection-Framework-1](imgs/Collection-Framework-1.png)
 
 ![Collection-Framework-2](imgs\Collection-Framework-2.png)
 

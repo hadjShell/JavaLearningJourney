@@ -1,14 +1,17 @@
 import java.lang.*;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
 
 public class Practice {
-    public static void main(String[] args) {
-        LocalDateTime dt = LocalDateTime.now();
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("LLLL dd y E hh:mm:ss");
-        System.out.println(dt.format(dtf));
-        System.out.println(dt.getChronology());
+    public static void main(String[] args) throws Exception {
+        Path p = Paths.get("foo");
+        System.out.println(p.toAbsolutePath());
+        System.out.println(p.toRealPath());
 
     }
 
