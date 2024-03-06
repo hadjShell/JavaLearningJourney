@@ -924,6 +924,7 @@ Date: 20/01/2024
 * <img src="imgs/Stream.png" alt="Stream" style="zoom:33%;" />
 * Stack and method area is the **context** of a program; others are the resources
 * [`java.io` package hierarchy](https://docs.oracle.com/javase%2F9%2Fdocs%2Fapi%2F%2F/java/io/package-tree.html)
+* [Java Stream Tutorial](https://docs.oracle.com/javase/tutorial/essential/io/index.html)
 
 ### Stream
 
@@ -1038,9 +1039,44 @@ Date: 20/01/2024
 
 * `BufferedReader` and `BufferedWriter`
 
+### Formatting Streams
+
+* `PrintWriter`, `PrintStream`
+  * The only `PrintStream` objects you are likely to need are `System.out` and `System.error`
+  * When you need to create a formatted output stream, instantiate `PrintWriter`, not `PrintStream`
+  * `void print()`
+    * `String.valueOf()` is invoked, and then the string's characters are converted into bytes according to the default charset, and these bytes are written in exactly the manner of the `write(int)`.
+  * `void println()`
+  * `PrintStream printf()`, `PrintStream format()`
+    * They behave the same
+* `Scanner`
+  * Useful for breaking down formatted input into tokens and translating individual tokens according to their data type
+  * By default, a scanner uses white space (*include blanks, tabs, and line terminators*) to separate tokens
+  * A scanning operation (`next()` or `hasNext()`) may block waiting for input
+  * Even though a scanner is not a stream, you need to close it to indicate that you're done with its underlying stream
+
 ### Data Streams
 
+* `DataInputStream`, `DataOutputStream`
+* Created as a wrapper for an existing byte stream object
+* The input stream consists of simple binary data, with nothing to indicate the type of individual values, or where they begin in the stream (not readable)
+* Each specialized `write` in `DataStreams` is exactly matched by the corresponding specialized `read`. It is up to the programmer to make sure that output types and input types are matched in this way
+* `DataStreams` uses one very bad programming technique: it uses floating point numbers to represent monetary values
+
 ### Object Streams
+
+* Serialisation and deserialisation
+  * Storing and retrieving the state of an object
+  * Most, but not all, standard classes support serialization of their objects
+  * Rules
+    * **Implement the marker interface `Serializable`**
+    * **There must be a non-parametarized constructor**
+    * **`static` or `transient` members will not be serialised**
+* `ObjectInputStream`, `ObjectOutputStream`
+  * A single invocation of `writeObject()` can cause a large number of objects to be written to the stream
+  * A stream can only contain one copy of an object, though it can contain any number of references to it
+  * If a single object is written to two different streams, it is effectively duplicated
+  * Type casting after `readObject()` is needed
 
 ### `RandomAccessFile`
 
@@ -1136,8 +1172,6 @@ Date: 20/01/2024
 * `File`
 
 * `Files`
-
-### Exceptions
 
 ***
 
