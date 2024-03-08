@@ -1,6 +1,6 @@
 import java.lang.*;
 
-public class Practice {
+public class Practice<T> {
     public static void main(String[] args) throws Exception {
 
     }

@@ -117,6 +117,8 @@ Date: 20/01/2024
 
 * Java method is pass-by-value
 
+* A parameter is a variable in a method definition. When a method is called, the arguments are the data you pass into the method's parameters
+
 * Method Overloading
   * Methods have the same name, but take a unique list of argument types
   * Overloaded methods **CANNOT** differ only by return type
@@ -1186,23 +1188,75 @@ Date: 20/01/2024
   public class ClassName<T> {}
   public interface InterfaceName<A, B, C, D> {}
   
-  // generic method
+  // generic methods
   public <T> void func(T x) {}
   ```
 
-* Java generics are implemented using *erasure*, which means that any specific type information is erased when you use a generic
-
-* Erasure is a compromise in the implementation of Java generics, reification would be a better choice if generics had been part of Java 1.0
-
-* Erasure ensures migration compatibility
+* If you don't specify the type explicitly when declaring the instance, it will be an `Object` type
 
 * Bounds
 
   * Allow you to place constraints on the parameter types that can be used with generics
 
   * ```java
-    public class ClassName<T extends BoundedClass> {}
+    class A {}
+    class B extends A {}
+    
+    // always extends whenever A is a class or an interface
+    class Test<T extends A> {}
+    
+    public Main {
+      public static void main(String[] args) {
+        // both allowed
+        Test<A> t = new Test<>();
+        Test<B> t = new Test<>();
+      }
+    }
     ```
+
+* Wildcard
+
+  * Type arguments of parameterized types
+
+  * ```java
+    // upper bound
+    ? extends B
+    // lower bound
+    ? super B
+    ```
+
+  * ```java
+    class Test {
+        static void printCollection(Collection<?> c) {
+                                    // a wildcard collection
+            for (Object o : c) {
+                System.out.println(o);
+            }
+        }
+    
+        public static void main(String[] args) {
+            Collection<String> cs = new ArrayList<String>();
+            cs.add("hello");
+            cs.add("world");
+            printCollection(cs);
+        }
+    }
+    ```
+
+  * If the type parameter is only used in method signature, in the absence of such interdependency between the type(s) of the argument(s), the return type and/or throws type, generic methods are considered bad style, and wildcards are preferred
+
+* Java generics are implemented using *erasure*, which means that any specific type information is erased when you use a generic
+
+  * ```java
+    // This is not allowed
+    T[] t = new T[size]; // compile error
+    
+    T[] t = (T[]) new Object[size]; // no error
+    ```
+
+* Erasure is a compromise in the implementation of Java generics, reification would be a better choice if generics had been part of Java 1.0
+
+* [Erasure ensures migration compatibility](https://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.7)
 
 ***
 
@@ -1210,11 +1264,7 @@ Date: 20/01/2024
 
 ### Java Collections Framework
 
-![Collection-Framework-1](imgs/Collection-Framework-1.png)
-
-![Collection-Framework-2](imgs\Collection-Framework-2.png)
-
-![java_collection_api_diagram](imgs\java_collection_api_diagram.svg)
+![java_collection_api_diagram](imgs/java_collection_api_diagram.svg)
 
 ### Iterator
 
