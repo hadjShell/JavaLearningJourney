@@ -1,7 +1,7 @@
 import java.lang.*;
 
-public class Practice<T> {
-    public static void main(String[] args) throws Exception {
+public class Practice {
+    public static void main(String[] args) {
 
     }
 
@@ -13,8 +13,4 @@ public class Practice<T> {
         return s.matches("^([0-3][0-9])/([0-1][0-9])/(\\d{4})$");
     }
 
-    @Deprecated(since = "1.1")
-    public static void show() {
-        System.out.println("Hi");
-    }
 }

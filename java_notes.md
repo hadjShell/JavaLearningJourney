@@ -1205,7 +1205,7 @@ Date: 20/01/2024
     // always extends whenever A is a class or an interface
     class Test<T extends A> {}
     
-    public Main {
+    public class Main {
       public static void main(String[] args) {
         // both allowed
         Test<A> t = new Test<>();
@@ -1262,13 +1262,222 @@ Date: 20/01/2024
 
 ## Collections
 
-### Java Collections Framework
+### Java Collection Framework
 
 ![java_collection_api_diagram](imgs/java_collection_api_diagram.svg)
 
-### Iterator
+### `Collection`
 
-* Implementation details in source code
+* Methods
+  * `boolean add(E e)`
+  * `boolean addAll(Collection<? extends E> c)`
+  * `boolean remove(Object o)`
+  * `boolean removeAll(Collection<?> c)`
+  * `boolean retainAll(Collection<?> c)`
+  * `boolean contains(Object o)`
+  * `boolean containsAll(Collection<?> c)`
+  * `void clear()`
+  * `boolean isEmpty()`
+  * `int size()`
+  * `Iterator<E> iterator()`
+  * `Object[] toArray()`
+  * `T[] toArray(T[] a)`
+    * `a` - the array into which the elements of this collection are to be stored, if it is big enough; otherwise, a new array of the same runtime type is allocated for this purpose
+    * The element in the array immediately following the end of the collection is set to `null`
+
+### `List`
+
+* An ordered collection (a sequence)
+* Methods
+  * `void add(int index, E e)`
+
+  * `boolean addAll(int index, Collection<? extends E> c)`
+
+  * `E get(int index)`
+
+  * `E remove(int index)`
+
+  * `E set(int index, E e)`
+    * Returns the element previously at the specified position
+
+  * `int indexOf(Object o)`
+
+  * `int lastIndexOf(Object o)`
+
+  * `List<E> subList(int from, int to)`
+    * `from` - low endpoint (inclusive) of the subList
+    * `to` - high endpoint (exclusive) of the subList
+
+  * `ListIterator<E> listIterator()`
+
+  * `ListIterator<E> listIterator(int index)`
+
+  * `static List<E> of(E... elements)`
+    * Returns an **unmodifiable list** containing an arbitrary number of elements
+
+  * `static List<E> copyOf(Collection<? extends E> coll)`
+    * Returns an **unmodifiable list** containing the elements of the given Collection, in its iteration order
+    * The given Collection must not be null, and it must not contain any null elements
+
+* More flexible iterator: `listIterator()`
+
+  * Can move back
+
+    * `previous()`
+      * logically equivalent to `*(p--)`
+
+    * `hasPrevious()`
+
+
+#### `ArrayList`
+
+* Resizable-array implementation of the `List` interface
+* Cannot store primitive type variables
+* Copy an `ArrayList`
+  * `addAll(originalArrayList)`
+  * `ArrayList<E> copy = new ArrayList<>(originalArrayList)`
+
+#### `LinkedList`
+
+* Doubly-linked list implementation of the `List` and `Deque` interfaces
+* Suitable for large list with lots of insertion and deletion
+
+### `Queue`
+
+* FIFO
+* Methods
+  * `boolean add(E e)`
+    * Throws an `IllegalStateException` if no space is currently available
+  * `boolean offer(E e)`
+    * Returns false instead of throwing `IllegalStateException`
+  * `E poll()`
+    * Retrieves and removes the head of this queue, or returns `null` if this queue is empty
+  * `E remove()`
+    * Retrieves and removes the head of this queue, or throws `NoSuchElementException` if this queue is empty
+  * `E peek()`
+    * Retrieves, but does not remove, the head of this queue, or returns `null` if this queue is empty
+  * `E element()`
+    * Retrieves, but does not remove, the head of this queue, or throws `NoSuchElementException` if this queue is empty
+
+#### `Deque`
+
+* Double ended queue
+
+* A linear collection that supports element insertion and removal at both ends
+
+* It can be used as a queue or a stack
+
+* Methods
+
+  * |         | First Element (Head)                                         |                                                              | Last Element (Tail)                                          |                                                              |
+    | :------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+    |         | Throws exception                                             | Special value                                                | Throws exception                                             | Special value                                                |
+    | Insert  | [`addFirst(e)`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Deque.html#addFirst(E)) | [`offerFirst(e)`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Deque.html#offerFirst(E)) | [`addLast(e)`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Deque.html#addLast(E)) | [`offerLast(e)`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Deque.html#offerLast(E)) |
+    | Remove  | [`removeFirst()`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Deque.html#removeFirst()) | [`pollFirst()`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Deque.html#pollFirst()) | [`removeLast()`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Deque.html#removeLast()) | [`pollLast()`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Deque.html#pollLast()) |
+    | Examine | [`getFirst()`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Deque.html#getFirst()) | [`peekFirst()`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Deque.html#peekFirst()) | [`getLast()`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Deque.html#getLast()) | [`peekLast()`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Deque.html#peekLast()) |
+
+* Comparison of `Queue` and `Deque` methods
+
+  * | `Queue` Method                                               | Equivalent `Deque` Method                                    |
+    | ------------------------------------------------------------ | ------------------------------------------------------------ |
+    | [`add(e)`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Deque.html#add(E)) | [`addLast(e)`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Deque.html#addLast(E)) |
+    | [`offer(e)`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Deque.html#offer(E)) | [`offerLast(e)`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Deque.html#offerLast(E)) |
+    | [`remove()`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Deque.html#remove()) | [`removeFirst()`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Deque.html#removeFirst()) |
+    | [`poll()`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Deque.html#poll()) | [`pollFirst()`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Deque.html#pollFirst()) |
+    | [`element()`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Deque.html#element()) | [`getFirst()`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Deque.html#getFirst()) |
+    | [`peek()`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Deque.html#peek()) | [`peekFirst()`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Deque.html#peekFirst()) |
+
+* Comparison of `Stack` and `Deque` methods
+
+  * | Stack Method                                                 | Equivalent `Deque` Method                                    |
+    | ------------------------------------------------------------ | ------------------------------------------------------------ |
+    | [`push(e)`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Deque.html#push(E)) | [`addFirst(e)`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Deque.html#addFirst(E)) |
+    | [`pop()`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Deque.html#pop()) | [`removeFirst()`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Deque.html#removeFirst()) |
+    | [`peek()`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Deque.html#peek()) | [`getFirst()`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Deque.html#getFirst()) |
+
+#### `ArrayDeque`
+
+* Resizable-array implementation of `Deque`
+* This class is likely to be faster than `Stack`when used as a stack, and faster than `LinkedList` when used as a queue
+* Most `ArrayDeque` operations run in amortized constant time
+
+#### `PriorityQueue`
+
+* An unbounded priority queue based on a priority heap
+* The elements are ordered according to their *natural ordering*, or by a `Comparator` provided at construction time
+
+### `Set`
+
+* A collection that contains no duplicate elements, and at most one `null` element. More formally, sets contain no pair of elements `e1` and `e2` such that `e1.equals(e2)`
+* No defined ordering
+* No extra methods 
+
+#### `HashSet`
+
+* This class implements the `Set` interface, backed by a hash table (actually a `HashMap` instance)
+* `HashSet(int initialCapacity, float loadFactor)`
+
+#### `LinkedHashSet`
+
+* Hash table and linked list implementation of the `Set` interface, with predictable iteration order
+* This linked list defines the iteration ordering, which is the order in which elements were inserted into the set (*insertion-order*)
+
+#### `TreeSet`
+
+* A `NavigableSet` implementation based on a `TreeMap`
+* The elements are ordered according to their *natural ordering*, or by a `Comparator` provided at construction time
+* This implementation provides guaranteed `log(n)` time cost for the basic operations
+* Methods
+  * `E ceiling(E e)`
+  * `E floor(E e)`
+  * `E higher(E e)`
+  * `E lower(E e)`
+
+### `Map`
+
+* An object that maps keys to values
+* Java map cannot contain duplicate keys, and each key can only map to at most one value
+* Methods
+  * `V put(K key, V value)`
+    * Returns the previous value associated with `key`, or `null` if there was no mapping for `key`
+  * `V get(Object key)` 
+  * `V remove(Object key)`
+  * `V replace(K key, V value)`
+  * `boolean containsKey(Object key)`
+  * `boolean containsValue(Object value)`
+  * `Set<K> keySet()`
+  * `Collection<V> values()`
+  * `Set<Map.Entry<K, V>> entrySet()`
+    * Those returned collections are backed by the map, so changes to the map are reflected in the set, and vice-versa
+
+#### `HashMap`
+
+* Hash table based implementation
+
+#### `LinkedHashMap`
+
+* Hash table and linked list implementation
+
+* Insertion order or access order
+
+* Can be implemented as cache
+
+  * Override the method `protected boolean removeEldestEntry(Map.Entry<K, V> eldest)`
+
+  * ```java
+    private static final int MAX_ENTRIES = 100;
+    
+     protected boolean removeEldestEntry(Map.Entry eldest) {
+        return size() > MAX_ENTRIES;
+     }
+    ```
+
+
+#### `TreeMap`
+
+* A red-black tree implementation
+
+### `Iterator`
 
 * The iterators returned by the class's [`iterator`](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ArrayList.html#iterator()) and [`listIterator`](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ArrayList.html#listIterator(int)) methods are *fail-fast*: if the list is structurally modified at any time after the iterator is created, in any way **except through the iterator's own [`remove`](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ListIterator.html#remove()) or [`add`](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ListIterator.html#add(E)) methods**, the iterator will throw a [`ConcurrentModificationException`](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ConcurrentModificationException.html). Thus, in the face of concurrent modification, the iterator fails quickly and cleanly, rather than risking arbitrary, non-deterministic behavior at an undetermined time in the future
 
@@ -1289,12 +1498,7 @@ Date: 20/01/2024
 
 * Iterator is implemented as a private inner class in each collection class implementation
 
-### Collection
-
-* The root interface in the *collection hierarchy*
-* The JDK does not provide any direct implementations of this interface: it provides implementations of more specific sub-interfaces like Set and List. This interface is typically used to pass collections around and manipulate them where maximum generality is desired
-
-### Collections
+### `Collections`
 
 * Collections is a utility class
 * It defines several utility methods that operate on or return collections.
@@ -1308,6 +1512,35 @@ Date: 20/01/2024
   * `swap()`
 * For `getter`, `setter` and `constructor`, it is better to use a **copy** of the collection parameter to initialize the object field to ensure immutability
 
+### `Comparable` and `Comparator`
+
+* `java.lang.Comparable<T>`
+  * Method
+    *  `int compareTo(T o)`
+      * Returns a negative integer, zero, or a positive integer as this object is less than, equal to, or greater than the specified object
+
+  * Lists (and arrays) of objects that implement this interface can be sorted automatically by `Collections.sort` (and `Arrays.sort`). Objects that implement this interface can be used as keys in a `SortedMap` or as elements in a `SortedSet`, without the need to specify a comparator
+  * **It is a functional interface but not one logically**
+    * It is more like a trait of an object. "This thing can be compared", rather than "this thing does the comparing"
+
+  * How to use `Comparable`?
+    * Implement the interface
+
+* `java.util.Comparator<T>`
+  * A functional interface
+    * `int compare(T o1, T o2)`
+
+  * Comparators can be passed to a sort method (such as `Collections.sort` or `Arrays.sort`) to allow precise control over the sort order. Comparators can also be used to control the order of certain data structures (such as `SortedSet` or `SortedMap`), or to provide an ordering for collections of objects that don't have a natural ordering
+  * When to use `Comparator`?
+    * The objects in collections don't have natural ordering. E.g. their class is provided in an external library without write permission
+
+    * The objects do have natural ordering but you want to sort it in a different logic
+
+  * How to use `Comparator`?
+    * Create an anonymous class implementing `Comparator` and pass it as a parameter
+    * Lamda expression
+
+
 ### Shallow Copy vs. Deep Copy
 
 * | Shallow Copy                                                 | Deep Copy                                                    |
@@ -1317,198 +1550,36 @@ Date: 20/01/2024
   | Shallow Copy stores the copy of the original object and points the references to the objects. | Deep copy stores the copy of the original object and recursively copies the objects as well. |
   | Shallow copy is faster.                                      | Deep copy is comparatively slower.                           |
 
-* Usage
 
-  * Shallow copy
+* Shallow copy
 
-    ```java
-    Collection<T> copy = new Collection<>(original);
-    ```
+  ```java
+  Collection<T> copy = new Collection<>(original);
+  ```
 
-  * Deep copy
+* Deep copy
 
-    * Deep copy of Java class
+  * Deep copy of Java class
 
-      * Implement the `clonable` interface and override the `clone()` method (inherited from `Object`) in the class of objects within the collection
+    * Implement the `clonable` interface and override the `clone()` method (inherited from `Object`) in the class of objects within the collection
 
-        > Note: `Object.clone()` is `native`
-        >
-        > Must implement `cloneable` to handle `CloneNotSupportedException`, more details referring to the Javadoc in the source code
+      > Note: `Object.clone()` is `native`
+      >
+      > Must implement `cloneable` to handle `CloneNotSupportedException`, more details referring to the Javadoc in the source code
 
-      * However, `clone()` is actually shallow copy not deep copy
+    * However, `clone()` is actually shallow copy not deep copy
 
-      * Therefore,
+    * Therefore,
 
-        * All immutable fields or primitive fields can be used as it is. They don’t require any special treatment. e.g. primitive classes, wrapper classes and `String` class.
-        * For all mutable field members, we must create a new object of member and assign it’s value to cloned object.
+      * All immutable fields or primitive fields can be used as it is. They don’t require any special treatment. e.g. primitive classes, wrapper classes and `String` class.
+      * For all mutable field members, we must create a new object of member and assign it’s value to cloned object.
 
-    * Deep copy of Java Collections
+  * Deep copy of Java Collections
 
-      1. Create a new instance of collection
-      2. Clone all elements from given collection to clone collection
+    1. Create a new instance of collection
+    2. Clone all elements from given collection to clone collection
 
-    * [Example](https://howtodoinjava.com/java/collections/arraylist/arraylist-clone-deep-copy/)
-
-### Comparable and Comparator
-
-* Comparison is a common behavior
-
-* `Comparable` is an Interface with one interface `int compareTo(T o)`
-
-* This interface imposes a total ordering on the objects of each class that implements it. This ordering is referred to as the class's **natural ordering**, and the class's `compareTo` method is referred to as its natural comparison method
-
-* Lists (and arrays) of objects that implement this interface can be sorted automatically by `Collections.sort` (and `Arrays.sort`). Objects that implement this interface can be used as keys in a sorted map or as elements in a sorted set, without the need to specify a comparator
-
-* How to use `Comparable`?
-
-  * Implement the interface in the object class
-
-* `Comparator` is a functional Interface with two interfaces: `int compare(T o1, T o2)`, `boolean equals(Object obj)`
-
-  * Note that it is always safe **not** to override `Object.equals(Object)`. However, overriding this method may, in some cases, improve performance by allowing programs to determine that two distinct comparators impose the same order.
-
-* Comparators can be passed to a sort method (such as `Collections.sort` or `Arrays.sort`) to allow precise control over the sort order. Comparators can also be used to control the order of certain data structures (such as sorted sets or sorted maps), or to provide an ordering for collections of objects that don't have a natural ordering
-
-* When to use `Comparator`?
-
-  * The objects in collections don't have natural ordering. E.g. their class is provided in an external library without write permission
-
-  * The objects do have natural ordering but you want to sort it in a different logic
-
-    > **Parameter can also be treated as a logic**
-
-* How to use `Comparator`?
-
-  * Create an anonymous class implementing `Comparator` and pass it to the `sort`
-
-* Two types of `sort`
-
-  * ```java
-    public static <T extends Comparable<? super T>> void sort(List<T> list) {
-            list.sort(null);
-        }
-    ```
-
-  * ```java
-    public static <T> void sort(List<T> list, Comparator<? super T> c) {
-            list.sort(c);
-        }
-    ```
-
-* [Extra explanation](https://www.youtube.com/watch?v=oAp4GYprVHM)
-
-* Inconsistency with equals issue
-
-### List
-
-* An ordered collection (a sequence)
-
-* More flexible iterator: `listIterator()`
-
-  * Can move back
-
-    * `previous()`
-
-      > `previous() logically equivalent to *(p--)`
-
-    * `hasPrevious()`
-
-      ```java
-      public boolean hasPrevious() {	return cursor != 0; }
-      ```
-
-  * **Use a `boolean` variable `goForward` to guard your operations**
-
-    > As the implementations of `next()` and `previous()` are slightly logically different
-
-  * After `remove()` the element, should move the `cursor` by `next()` or `previous` (with validation), otherwise two continuous `remove()` will throw `IllegalStateException` (because `lastRet` is set to `-1` after a `remove()` operation, see the source code for details)
-
-#### ArrayList
-
-* Resizable-array implementation of the `List` interface
-* Cannot store primitive type variables
-* [Interfaces](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ArrayList.html)
-  * `add(E)` --- Append the element to the end of the list
-  * `add(int, E)` --- Inserts the specified element at the specified position in this list
-  * `size()`
-  * `get(int)` --- Returns the element at the specified position in this list
-  * `set(int, E)` --- Replaces the element at the specified position in this list with the specified element
-  * `remove(int)` --- Removes the element at the specified position
-  * `contains(Object)` --- Returns `true` if this list contains the specified element
-  * `indexOf(Object)` --- Returns the index of the first occurrence of the specified element in this list, or -1 if this list does not contain the element
-  * Copy an `ArrayList`
-    * `addAll(Collection)` --- Appends all of the elements in the specified collection to the end of this list, in the order that they are returned by the specified collection's Iterator
-    * `ArrayList<E> copy = new ArrayList<E>(originalArrayList)`
-  * `toArray(T[])` --- Returns an array containing all of the elements in this list in proper sequence (from first to last element); the runtime type of the returned array is that of the specified array
-    * With no argument, it will return a `Object` array
-
-#### LinkedList
-
-* Doubly-linked list implementation of the `List` and `Deque` interfaces
-* Suitable for large list with lots of insertion and deletion
-* [Interfaces](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/LinkedList.html)
-  * `getFirst()` --- Returns the first element in this list
-  * `getLast()` --- Returns the last element in this list
-
-### Queue
-
-### Set
-
-* A collection that contains no duplicate elements, and at most one `null` element. More formally, sets contain no pair of elements `e1` and `e2` such that `e1.equals(e2)`. No defined ordering
-* [Interfaces](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Set.html)
-  * `add(E e)`
-  * `remove(Object o)`
-  * `contains(Object o)`
-  * `size()`
-  * `isEmpty()`
-  * `addAll(Collection<? extends E> c)` --- Union
-  * `retainAll(Collection<? extends E> c)` --- Intersection
-  * `removeAll(Collection<? extends E> c)` --- Difference
-  * `containsAll(Collection<? extends E> c)` --- Is it a subset?
-* It is recommended to override the `equals` and `hashcode` if you store mutable objects in the set
-
-#### HashSet
-
-* This class implements the `Set` interface, backed by a hash table (actually a `HashMap` instance)
-* It makes no guarantees as to the iteration order of the set; in particular, it does not guarantee that the order will remain constant over time
-
-#### LinkedHashSet
-
-* Hash table and linked list implementation of the `Set` interface, with predictable iteration order
-* This linked list defines the iteration ordering, which is the order in which elements were inserted into the set (*insertion-order*)
-
-#### TreeSet
-
-* 
-
-### Map
-
-* An object that maps keys to values
-* Java map cannot contain duplicate keys, and each key can only map to at most one value
-* Great care must be exercised if mutable objects are used as map keys. The behavior of a map is not specified if the value of an object is changed in a manner that affects `equals` comparisons while the object is a key in the map. 
-* [Interfaces](https://docs.oracle.com/en/java/javase/12/docs/api/java.base/java/util/Map.html)
-  * `put(K key, V value)` --- Associates the specified value with the specified key in this map. Returns: the previous value associated with `key`, or `null` if there was no mapping for `key`.
-  * `get(Object key)` --- Returns the value to which the specified key is mapped, or `null` if this map contains no mapping for the key.
-  * `containsKey(Object key)` --- Returns `true` if this map contains a mapping for the specified key.
-  * `keySet()` --- Returns a `Set` view of the keys contained in this map.
-  * `remove(Object key)` --- Removes the mapping for a key from this map if it is present. Returns the value to which this map previously associated the key, or `null` if the map contained no mapping for the key.
-  * `remove(Object key, Object value)` --- Removes the entry for the specified key only if it is currently mapped to the specified value. Returns `true` if the value was removed.
-  * `replace(K key, V value)` --- Replaces the entry for the specified key only if it is currently mapped to some value. Returns the previous value associated with the specified key, or `null` if there was no mapping for the key.
-  * `replace(K key, V oldValue, V newValue)` --- Replaces the entry for the specified key only if currently mapped to the specified value. Returns `true` if the value was replaced.
-
-#### HashMap
-
-* Hash table based implementation of the `Map` interface
-* This class makes no guarantees as to the order of the map; in particular, it does not guarantee that the order will remain constant over time
-
-#### LinkedHashMap
-
-* Hash table and linked list implementation of the `Map` interface
-* Insertion order
-
-#### TreeMap
-
-* 
+  * [Example](https://howtodoinjava.com/java/collections/arraylist/arraylist-clone-deep-copy/)
 
 
 ***
@@ -1576,12 +1647,6 @@ Date: 20/01/2024
     @MyAnno(name="David", date="01/01/1970")
     public MyClass {}
     ```
-
-***
-
-## Debugging and Unit Testing
-
-* 
 
 ***
 
