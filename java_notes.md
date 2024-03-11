@@ -185,9 +185,9 @@ Date: 20/01/2024
 * `int compareTo(String s)`
   * Compares two strings lexicographically
 * `String[] split(String regex)`
-* `String String.join(CharSequence delimiter, CharSequence... elements)`
+* `static String String.join(CharSequence delimiter, CharSequence... elements)`
 * `char[] toCharArray()`
-* `String String.valueOf(int i)`
+* `static String String.valueOf(int i)`
   * Convert other data type value to a string
 
 ### Regualr Expression
@@ -230,9 +230,15 @@ Date: 20/01/2024
 * Array is an object
 * Array has a field `length`
 * Arrays utilities - `Arrays`
-  * `Arrays.copyOf(<type>[], int)`
-  * `Arrays.toString()`
-  * `Arrays.asList(T[] array)`
+  * `binarySearch()`
+  * `compare()`
+  * `copyOf()`
+  * `equals()`
+  * `fill()`
+  * `sort()`
+  * `toString()`
+  * `asList()`
+  
 
 ***
 
@@ -1477,40 +1483,45 @@ Date: 20/01/2024
 
 * A red-black tree implementation
 
-### `Iterator`
+### `BitSet`
 
-* The iterators returned by the class's [`iterator`](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ArrayList.html#iterator()) and [`listIterator`](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ArrayList.html#listIterator(int)) methods are *fail-fast*: if the list is structurally modified at any time after the iterator is created, in any way **except through the iterator's own [`remove`](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ListIterator.html#remove()) or [`add`](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ListIterator.html#add(E)) methods**, the iterator will throw a [`ConcurrentModificationException`](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ConcurrentModificationException.html). Thus, in the face of concurrent modification, the iterator fails quickly and cleanly, rather than risking arbitrary, non-deterministic behavior at an undetermined time in the future
-
-* *The fail-fast behavior of iterators should be used only to detect bugs*
-
-* Usage
-
-  ```java
-  Iterator<E> i = collection.iterator();
-  while(i.hasNext())
-      System.out.println(i.next());
-  ```
-
-> ```java
-> // next() logically equivalent to *p++
-> public boolean hasNext() {	return cursor != size; }
-> ```
-
-* Iterator is implemented as a private inner class in each collection class implementation
+* This class implements a vector of bits that grows as needed
+* Each component of the bit set has a `boolean` value
+* By default, all bits in the set initially have the value `false`
 
 ### `Collections`
 
-* Collections is a utility class
-* It defines several utility methods that operate on or return collections.
+* `Collections` is a utility class
 * It contains only `static` methods
-* Some useful methods
-  * `sort()`
-  * `reverse()`
-  * `shuffle()`
+* Methods
+  * `<T extends Comparable<? super T>> void sort(List<T> l)`
+  * `<T> void sort(List<T> l, Comparator<? super T> c)`
+  * `void reverse(List<?> l)`
+  * `void rotate(List<?> l, int distance)`
+  * `void shuffle(List<?> l)`
+  * `void swap(List<?> l, int i, int j)`
   * `min()`, `max()`
-  * `binarySearch()`
-  * `swap()`
-* For `getter`, `setter` and `constructor`, it is better to use a **copy** of the collection parameter to initialize the object field to ensure immutability
+  * `<T> int binarySearch(List<? extends Comparable<? super T>> list, T key)`
+  * `<T> int binarySearch(List<? extends T> list, T key, Comparator<? super T> c)`
+    * Returns the index of the search key, if it is contained in the list; otherwise, `(-(insertion point) - 1)`
+
+### `Iterator`
+
+* An iterator over a collection
+* Iterators allow the caller to remove elements from the underlying collection during the iteration with well-defined semantics
+* Methods
+  * `boolean hasNext()`
+
+  * `E next()`
+
+  * `void remove()`
+
+* *fail-fast*: if the list is structurally modified at any time after the iterator is created, in any way **except through the iterator's own `remove()` or `add()` methods**, the iterator will throw a `ConcurrentModificationException`. Thus, in the face of concurrent modification, the iterator fails quickly and cleanly, rather than risking arbitrary, non-deterministic behavior at an undetermined time in the future
+* *The fail-fast behavior of iterators should be used only to detect bugs*
+* Iterator is implemented as a private inner class in each collection class implementation
+* `ListIterator`
+  * An iterator for lists that allows the programmer to traverse the list in either direction, modify the list during iteration, and obtain the iterator's current position in the list
+  * A `ListIterator` has no current element; its *cursor position* always lies between the element that would be returned by a call to `previous()` and the element that would be returned by a call to `next()`
 
 ### `Comparable` and `Comparator`
 
