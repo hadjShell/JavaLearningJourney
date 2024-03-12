@@ -1595,6 +1595,99 @@ Date: 20/01/2024
 
 ***
 
+## Networking Programming
+
+* `Socket`, `ServerSocket`
+* A socket is one endpoint of a two-way communication link between two programs running on the network
+* `DatagramSocket`, `DatagramPacket`
+
+***
+
+## JDBC
+
+* JDBC is an API used in java programming to interact with databases
+* Java Database Connectivity
+* ![JDBC](imgs/JDBC.png)
+
+### JDBC Drivers
+
+* Establish connection
+
+* Convert data types from Java language to database data types
+
+* Type-1 driver
+
+  * JDBC-ODBC bridge
+  * Open Database Connectivity (ODBC) is an open standard API that allows application programmers to access any database
+  * A layer between different program languages and different database systems
+  * Partial driver (not fully written in Java)
+
+* Type-2 driver
+
+  * Native-API
+  * API sitting on the database system
+  * Partial
+
+* Type-3 driver
+
+  * Java-Net protocol driver
+  * Use a server to talk to database
+  * Pure
+
+* Type-4 driver
+
+  * Thin driver
+  * Direct driver written in Java
+  * Pure
+
+* ```java
+  import java.sql.Connection;
+  import java.sql.DriverManager;
+  import java.sql.ResultSet;
+  import java.sql.SQLException;
+  import java.sql.Statement;
+  
+  public class Sample
+  {
+    public static void main(String[] args)
+    {
+      // NOTE: Connection and Statement are AutoClosable.
+      //       Don't forget to close them both in order to avoid leaks.
+      try
+      (
+        // create a database connection
+        Connection connection = DriverManager.getConnection("jdbc:sqlite:sample.db");
+        Statement statement = connection.createStatement();
+      )
+      {
+        statement.setQueryTimeout(30);  // set timeout to 30 sec.
+  
+        statement.executeUpdate("drop table if exists person");
+        statement.executeUpdate("create table person (id integer, name string)");
+        statement.executeUpdate("insert into person values(1, 'leo')");
+        statement.executeUpdate("insert into person values(2, 'yui')");
+        ResultSet rs = statement.executeQuery("select * from person");
+        while(rs.next())
+        {
+          // read the result set
+          System.out.println("name = " + rs.getString("name"));
+          System.out.println("id = " + rs.getInt("id"));
+        }
+      }
+      catch(SQLException e)
+      {
+        // if the error message is "out of memory",
+        // it probably means no database file is found
+        e.printStackTrace(System.err);
+      }
+    }
+  }
+  ```
+
+* 
+
+***
+
 ## JavaDoc
 
 * Tags
