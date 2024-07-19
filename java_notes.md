@@ -184,7 +184,12 @@ Date: 20/01/2024
 * `boolean equalsIgnoreCase(String s)`
 * `int compareTo(String s)`
   * Compares two strings lexicographically
+* `boolean matches(String regex)`
+* `String[] split(String regex, int limit)`
 * `String[] split(String regex)`
+  * This method works as if by invoking the two-argument [`split`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html#split(java.lang.String,int)) method with the given expression and a limit argument of zero
+  * Trailing empty strings will therefore be discarded
+
 * `static String String.join(CharSequence delimiter, CharSequence... elements)`
 * `char[] toCharArray()`
 * `static String String.valueOf(int i)`
@@ -229,7 +234,7 @@ Date: 20/01/2024
   * For loop
 * Array is an object
 * Array has a field `length`
-* Arrays utilities - `Arrays`
+* Array utilities - `Arrays`
   * `binarySearch()`
   * `compare()`
   * `copyOf()`
@@ -338,7 +343,7 @@ Date: 20/01/2024
   * `super` is commonly used with method overriding
   * `this()` call a constructor from another overloaded constructor in the same class
   * `super()` call a parent constructor
-  * Java compiler puts a default call to `super()` if we don't add it, and it's always the no-argument `super` which is inserted by compiler
+  * **Java compiler puts a default call to `super()` if we don't add it**, and it's always the no-argument `super` which is inserted by compiler
   * A constructor can have a call to `super()` or `this()` but never both
 
 * Method overloading vs. method overriding
@@ -433,7 +438,7 @@ Date: 20/01/2024
 * An abstract method is a method that is declared `abstract` without an implementation
 * Abstract class cannot be instantiated, but can be subclassed
 * When an abstract class is subclassed, the subclass usually provides implementations for all of the abstract methods in its superclass. However, if it doesn't, then the subclass must also be declared `abstract`
-* A subclass of a non-abstract superclass can be abstract
+* A subclass of a non-abstract superclass can be `abstract`
 
 ### Interfaces vs. Abstract Classes
 
@@ -447,7 +452,7 @@ Date: 20/01/2024
   * Purpose is **abstraction**
   * Expect unrelated classes will implement your interface
   * Want to specify the behavior of a particular data type, but not concern about who implements its behavior
-  * Want to separate different behavior
+  * Want to separate different behaviors
 
 ***
 
@@ -484,14 +489,16 @@ Date: 20/01/2024
 
 ***
 
-## Inner Class
+## Nested Classes
 
 * Place a class definition within another class definition
+* Nested classes are divided into two categories: non-static and static
+  * Non-static nested classes are called *inner classes*
+  * Nested classes that are declared `static` are called *static nested classes*
 
+### Inner Classes
 
-### Nested Inner Class
-
-* Inside the outer class, inner class can access the members of outer class directly
+* Inside the outer class, inner class can access the members of outer class directly (even if it's `prrivate`)
 
 * Inside the outer class, you can create inner class objects
 
@@ -507,24 +514,34 @@ Date: 20/01/2024
 
 * The inner class will be compiled to `Outer$Inner.class`
 
-* Ordinary inner class cannot have `static` members or nested classes
+* Inner class cannot have `static` members or nested classes
 
-### Local and Anonymous Inner Class
+### Local and Anonymous Inner Classes
 
-* Local inner class: an inner class defined inside a method
+* Local inner class: an inner class defined inside a code block, typically in a method
+  * A local class can access local variables and parameters of the enclosing block that are final or *effectively final*
+
 * Anonymous inner class: an inner class defined at the time of creation of itself
   * Useful when you want a class inheriting from a superclass or implementing an interface which only used in a specific method
 
 
-### Static Inner Class
+### Static Nested Classes
 
 * The static member of outer class
 
-### Why Inner Class?
+* In effect, a static nested class is behaviorally a top-level class that has been nested in another top-level class for packaging convenience
 
-* *Each inner class can independently inherit from an implementation. Thus, the inner class is not limited by whether the outer class is already inheriting from an implementation* (multiple implementation inheritance)
-* The inner class can have multiple instances, each with its own state information that is independent of the information in the outer-class object
-* In a single outer class you can have several inner classes, each of which implements the same interface or inherits from the same class in a different way
+* You instantiate a static nested class the same way as a top-level class
+
+  ```java
+  StaticNestedClass staticNestedObject = new StaticNestedClass();
+  ```
+
+### Why Nested Classes?
+
+* It is a way of logically grouping classes that are only used in one place
+* It increases encapsulation
+* It can lead to more readable and maintainable code
 * Nature of the problem
 
 
@@ -1351,19 +1368,33 @@ Date: 20/01/2024
 ### `Queue`
 
 * FIFO
+
 * Methods
   * `boolean add(E e)`
     * Throws an `IllegalStateException` if no space is currently available
+
   * `boolean offer(E e)`
     * Returns false instead of throwing `IllegalStateException`
-  * `E poll()`
-    * Retrieves and removes the head of this queue, or returns `null` if this queue is empty
+
   * `E remove()`
     * Retrieves and removes the head of this queue, or throws `NoSuchElementException` if this queue is empty
-  * `E peek()`
-    * Retrieves, but does not remove, the head of this queue, or returns `null` if this queue is empty
+
+  * `E poll()`
+
+    * Retrieves and removes the head of this queue, or returns `null` if this queue is empty
+
   * `E element()`
     * Retrieves, but does not remove, the head of this queue, or throws `NoSuchElementException` if this queue is empty
+
+  * `E peek()`
+
+    * Retrieves, but does not remove, the head of this queue, or returns `null` if this queue is empty
+
+  * |         | Throws exception | Returns special value |
+    | ------- | ---------------- | --------------------- |
+    | Insert  | `add(e)`         | `offer(e)`            |
+    | Remove  | `remove()`       | `poll()`              |
+    | Examine | `element()`      | `peek()`              |
 
 #### `Deque`
 
