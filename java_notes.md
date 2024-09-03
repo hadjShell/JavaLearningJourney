@@ -806,6 +806,8 @@ Date: 20/01/2024
   * `int myInt = myInteger`
     * Will be converted to `int myInt = myInteger.intValue()`
 
+* It's a good practice using `equals()` method to compare wrapper class objects
+
 * Interfaces
 
   * Autoboxing --- `Integer.valueOf(int)`
