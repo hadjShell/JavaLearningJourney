@@ -209,6 +209,7 @@ Date: 20/01/2024
 * `StringBuilder`
   * Basically same as `StringBuffer`
   * It is not thread-safe, but faster
+  * `+, +=` is actually implemented by `StringBuidler`,  one operator creates a new `StringBuilder` object
 
 ### Printing
 
@@ -613,7 +614,7 @@ Date: 20/01/2024
   } catch () {
     // handling exception if it occurs
   } finally {
-    // activities happen every time even if a method is returned
+    // activities happen every time even if a method is returned (executed before return)
     // cleanup
   }
   ```
@@ -628,13 +629,17 @@ Date: 20/01/2024
 
 * Try with resources
 
-  * Java 1.7 feature
+  * Java 7 feature
+
+  * Support multiple resources, separated by `;`
 
   * ```java
-    try (FileReader f = new FileReader(my.txt)) {
-      // use file
-      
-      return result;
+    try (Scanner scanner = new Scanner(new File("test.txt"))) {
+        while (scanner.hasNext()) {
+            System.out.println(scanner.nextLine());
+        }
+    } catch (FileNotFoundException fnfe) {
+        fnfe.printStackTrace();
     }
     
     // no finally block
@@ -781,8 +786,25 @@ Date: 20/01/2024
 ### `Object`
 
 * The root of the class hierarchy
+
 * Every class is a subclass, direct or indirect, of the `Object` class
+
 * [Interfaces](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html)
+
+  * ```java
+    public final native Class<?> getClass()
+    public native int hashCode()
+    public boolean equals(Object obj)
+    protected native Object clone() throws CloneNotSupportedException
+    public String toString()
+    public final native void notify()
+    public final native void notifyAll()
+    public final native void wait(long timeout) throws InterruptedException
+    public final void wait(long timeout, int nanos) throws InterruptedException
+    public final void wait() throws InterruptedException
+    protected void finalize() throws Throwable { }
+    ```
+
 * Override `equals()` and `hashcode()`
   * If two objects are equal according to the `equals()` method, then calling the `hashCode` method on each of the two objects must produce the same integer result
   * Default implementation of `equals()` simply tests `this == obj`
@@ -821,6 +843,19 @@ Date: 20/01/2024
     int num = Integer.parseInt(strNum);
     ```
 
+* `BigDecimal`
+  * Constructor
+    * `BigDecimal(String value)`
+    * `BigDecimal.valueOf(double value)`
+  * Methods
+    * `BigDecimal add(BigDecimal val)`
+    * `BigDecimal substract(BigDecimal val)`
+    * `BigDecimal multiply(BigDecimal val)`
+    * `BigDecimal divide(BigDecimal divisor, int scale, RoundingMode roundingMode)`
+    * `int compareTo(BigDecimal val)`
+      * Omit comparison on scale
+      * DON'T use `equals()`
+
 ### `Math`
 
 * All static methods
@@ -835,15 +870,72 @@ Date: 20/01/2024
 
 * Helpful to get information of a class
 
-* ```java
-  Class c = My.class;
-  Class c1 = new My().getClass();
-  
-  c.getName();
-  c.getDeclaredFields();
-  c.getConstructors();
-  c.getMethods();
-  ```
+* Four ways to get a `Class` object
+
+  * ```java
+    Class alunbarClass = TargetObject.class;
+    
+    TargetObject o = new TargetObject();
+    Class alunbarClass2 = o.getClass();
+    
+    // Below two will not initialise the class, 
+    // static fields and static code blocks will not be executed
+    Class alunbarClass1 = Class.forName("cn.javaguide.TargetObject");
+    
+    ClassLoader.getSystemClassLoader().loadClass("cn.javaguide.TargetObject");
+    ```
+
+* Example
+
+  * ```java
+    package cn.javaguide;
+    
+    public class TargetObject {
+        private String value;
+    
+        public TargetObject() {
+            value = "JavaGuide";
+        }
+    
+        public void publicMethod(String s) {
+            System.out.println("I love " + s);
+        }
+    
+        private void privateMethod() {
+            System.out.println("value is " + value);
+        }
+    }
+    
+    ```
+
+  * ```java
+    package cn.javaguide;
+    
+    public class Main {
+        public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchFieldException {
+            Class<?> targetClass = Class.forName("cn.javaguide.TargetObject");
+            TargetObject targetObject = (TargetObject) targetClass.newInstance();
+          
+            Method[] methods = targetClass.getDeclaredMethods();
+            for (Method method : methods) {
+                System.out.println(method.getName());
+            }
+    
+            Method publicMethod = targetClass.getDeclaredMethod("publicMethod",
+                    String.class);
+            publicMethod.invoke(targetObject, "JavaGuide");
+    
+            Field field = targetClass.getDeclaredField("value");
+            field.setAccessible(true);
+            field.set(targetObject, "JavaGuide");
+    
+            Method privateMethod = targetClass.getDeclaredMethod("privateMethod");
+            privateMethod.setAccessible(true);
+            privateMethod.invoke(targetObject);
+        }
+    }
+    ```
+
 
 ***
 
@@ -1605,11 +1697,11 @@ Date: 20/01/2024
 
   * Deep copy of Java class
 
-    * Implement the `clonable` interface and override the `clone()` method (inherited from `Object`) in the class of objects within the collection
+    * Implement the `Clonable` interface and override the `clone()` method (inherited from `Object`) in the class of objects within the collection
 
       > Note: `Object.clone()` is `native`
       >
-      > Must implement `cloneable` to handle `CloneNotSupportedException`, more details referring to the Javadoc in the source code
+      > Must implement `Cloneable` to handle `CloneNotSupportedException`, more details referring to the Javadoc in the source code
 
     * However, `clone()` is actually shallow copy not deep copy
 
@@ -1618,11 +1710,24 @@ Date: 20/01/2024
       * All immutable fields or primitive fields can be used as it is. They don’t require any special treatment. e.g. primitive classes, wrapper classes and `String` class.
       * For all mutable field members, we must create a new object of member and assign it’s value to cloned object.
 
+    * ```java
+      @Override
+      public Person clone() {
+          try {
+              Person person = (Person) super.clone();
+              person.setAddress(person.getAddress().clone());
+              return person;
+          } catch (CloneNotSupportedException e) {
+              throw new AssertionError();
+          }
+      }
+      ```
+  
   * Deep copy of Java Collections
-
+  
     1. Create a new instance of collection
     2. Clone all elements from given collection to clone collection
-
+  
   * [Example](https://howtodoinjava.com/java/collections/arraylist/arraylist-clone-deep-copy/)
 
 
@@ -1746,6 +1851,10 @@ Date: 20/01/2024
 ## Annotations
 
 * Annotations provide information (*metadata*) that you need to fully describe your program to the compiler and JVM, but that cannot be expressed in Java
+
+* Java 5 feature
+
+* In fact, annotation is a special interface which extends `Annotation` interface
 
 * Built-in annotations
 
