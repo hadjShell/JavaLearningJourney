@@ -499,7 +499,7 @@ Date: 20/01/2024
 
 ### Inner Classes
 
-* Inside the outer class, inner class can access the members of outer class directly (even if it's `prrivate`)
+* Inside the outer class, inner class can access the members of outer class directly (even if it's `private`)
 
 * Inside the outer class, you can create inner class objects
 
