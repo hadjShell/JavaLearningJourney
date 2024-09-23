@@ -1722,13 +1722,53 @@ Date: 20/01/2024
           }
       }
       ```
-  
+
   * Deep copy of Java Collections
-  
+
     1. Create a new instance of collection
     2. Clone all elements from given collection to clone collection
-  
+
   * [Example](https://howtodoinjava.com/java/collections/arraylist/arraylist-clone-deep-copy/)
+
+### Collections to Array
+
+* `<T> T[] toArray(T[] array)`
+  * Must pass a specific type array of length 0
+
+### Array to Collections
+
+* `List<T> Arrays.asList(T... a)`
+
+  * The array should be an array of object instead of an array of primitive type values
+
+    * ```java
+      int[] myArray = {1, 2, 3};
+      List myList = Arrays.asList(myArray);
+      System.out.println(myList.size());// 1
+      System.out.println(myList.get(0));// address of that array
+      System.out.println(myList.get(1));// ArrayIndexOutOfBoundsException
+      int[] array = (int[]) myList.get(0);
+      System.out.println(array[0]);// 1
+      ```
+
+  * The returned list implements the optional `Collection` methods, except those that would change the size of the returned list. Those methods leave the list unchanged and throw `UnsupportedOperationException`
+
+    * No `add()`, `remove()`, `clear()`
+
+* How to correctly transform an array to a list
+
+  1. `List list = new ArrayList<>(Arrays.asList("a", "b", "c"))`
+
+  2. ```java
+     Integer [] myArray = { 1, 2, 3 };
+     List myList = Arrays.stream(myArray).collect(Collectors.toList());
+     // Also works for primitive array
+     int [] myArray2 = { 1, 2, 3 };
+     List myList = Arrays.stream(myArray2).boxed().collect(Collectors.toList());
+     ```
+
+  3. `List.of(array)`
+     * Unmodifiable list
 
 
 ***
