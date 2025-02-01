@@ -1,8 +1,10 @@
+import league.FootballPlayer;
+import league.Player;
+
 import java.lang.*;
 
 public class Practice {
     public static void main(String[] args) {
-
     }
 
     private static boolean checkBinaryForm(String s) {

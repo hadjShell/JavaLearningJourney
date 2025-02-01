@@ -106,6 +106,7 @@ Date: 20/01/2024
 * `if-else`
 * `switch`
   * `String` can be used
+  * [Enhanced switch](https://nipafx.dev/java-switch/)
 * `while`
 * `do while`
 * `for`
@@ -172,6 +173,8 @@ Date: 20/01/2024
 * `String trim()`
 * `String substring(int begin)`
 * `String substring(int begin, int end)`
+  * `[begin, end)`
+
 * `String replace(char old, char new)`
 * `String replaceAll(String regex, String replacement)`
 * `boolean startsWith(String s)`
@@ -236,14 +239,14 @@ Date: 20/01/2024
 * Array is an object
 * Array has a field `length`
 * Array utilities - `Arrays`
-  * `binarySearch()`
-  * `compare()`
-  * `copyOf()`
-  * `equals()`
-  * `fill()`
-  * `sort()`
-  * `toString()`
-  * `asList()`
+  * `int binarySearch()`
+  * `int compare()`
+  * `T[] copyOf()`
+  * `boolean equals()`
+  * `void fill()`
+  * `void sort()`
+  * `String toString()`
+  * `List<T> asList()`
   
 
 ***
@@ -264,7 +267,7 @@ Date: 20/01/2024
   * No return type
   * Every objects has a default constructor
   * Constructors can be overloaded, using `this` keyword to overload to avoid duplication
-  * `this()` must be the first statement in constructor body
+  * `this()` must be the first statement in the overloaded constructor body
   * If a class doesn't explicitly declare any constructor, Java compiler automatically provides a no-argument constructor. This default constructor calls the class parent's no-argument constructor, or the `Object` constructor if the class has no parent. **If the parent doesn't have no-argument constructor, compiler will reject the program.**
   * It's good to always define a default constructor
 

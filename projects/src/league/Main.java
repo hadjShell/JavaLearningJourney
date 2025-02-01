@@ -17,5 +17,8 @@ public class Main {
         footLeague.addTeam(footTeam3);
         // footLeague.addTeam(baseTeam);
         footLeague.printAllTeams();
+
+        FootballPlayer foot2 = (FootballPlayer) foot1;
+        foot2.test();
     }
 }

@@ -10,4 +10,8 @@ public abstract class Player {
     public String getName() {
         return name;
     }
+
+    private void test() {
+        System.out.println("package private");
+    }
 }

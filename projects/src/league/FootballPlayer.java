@@ -6,4 +6,7 @@ public class FootballPlayer extends Player {
         super(name);
     }
 
+    public void test() {
+        System.out.println("Override");
+    }
 }
