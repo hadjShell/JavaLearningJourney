@@ -18,7 +18,8 @@ public class Main {
         // footLeague.addTeam(baseTeam);
         footLeague.printAllTeams();
 
-        FootballPlayer foot2 = (FootballPlayer) foot1;
+        byte i = 1;
+        FootballPlayer foot2 = new FootballPlayer("David", i);
         foot2.test();
     }
 }

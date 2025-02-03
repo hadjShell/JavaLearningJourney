@@ -1943,3 +1943,4 @@ Date: 20/01/2024
 
 * Thinking in Java, Bruce Eckel
 * [CLearningPath notes](https://github.com/hadjShell/CLearningPath)
+* [Java Interview Questions](https://www.javatpoint.com/corejava-interview-questions)
