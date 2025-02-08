@@ -123,7 +123,9 @@ Date: 20/01/2024
 * Method Overloading
   * Methods have the same name, but take a unique list of argument types
   * Overloaded methods **CANNOT** differ only by return type
-
+  * Type promotion
+    * Can cause compile time error if there are more than one methods matched
+  
 * Variable Arguments
 
   * Variable numbers of inputs
@@ -427,12 +429,16 @@ Date: 20/01/2024
 * Interface cannot be instantiated
 * Methods in interfaces are implicitly `public`
 * Fields in interfaces are implicitly constant (`public static final`)
-* Interface can have `static` methods
+* SInce Java 8 interface can have `static` methods
 * An interface can extend another interface
 * Interface can have `default` methods which can have method body
   * Java 8 feature
   * Make refactoring interface easier
   * Java 9 allows `private` methods in interface that can be used in `default` methods inside interface
+* Marker Interface
+  * Has no member fields or methods
+  * Eg. `Serializable`, `Cloneable`
+
 
 
 ### Abstract Classes
@@ -464,7 +470,7 @@ Date: 20/01/2024
 
 * Package
 
-  * A collection of classes, interfaces, or other packages
+  * A collection of similar classes, interfaces, or other packages
   * `package`, `import`
   * Create a library and import it
     * Extract the package to `.jar` (Java ARchive) file in the project structure
@@ -526,7 +532,23 @@ Date: 20/01/2024
   * A local class can access local variables and parameters of the enclosing block that are final or *effectively final*
 
 * Anonymous inner class: an inner class defined at the time of creation of itself
+  * In other words, we can say that it a class without the name and can have only one object that is created by its definition
+  
   * Useful when you want a class inheriting from a superclass or implementing an interface which only used in a specific method
+  
+  * ```java
+    interface Eatable {  
+     	void eat();  
+    }  
+    class TestAnnonymousInner1 {  
+       public static void main(String args[]) {  
+       		Eatable e = new Eatable() {  
+        		public void eat() {System.out.println("nice fruits");}  
+       		};  
+       		e.eat();  
+       }  
+    }  
+    ```
 
 
 ### Static Nested Classes
@@ -559,9 +581,10 @@ Date: 20/01/2024
   * Identified by compiler
 * Logical error
   * Identified by debugging
-* Runtime error - Exception
+* Runtime error
   * Bad inputs
   * Unavailable resources
+  * Etc.
 
 
 ### `Exception` Class
@@ -589,11 +612,20 @@ Date: 20/01/2024
   R --> I[ArithmeticException]
   R --> J[IndexOutOfBoundException]
   R --> K[NullPointerException]
+  D --> L[StackOverflowError]
+  D --> M[VirtualMachineError]
+  D --> N[OutOfMemoryError]
   ```
+  
+* Error
+
+  * Error cause the program to exit since they are not recoverable
+
+  * Considered as unchecked exceptions
 
 * Checked exceptions: you must handle them *at compile time*
 
-* Special case: `RuntimeException`
+*  `RuntimeException`
 
   * Unchecked exceptions: you don't have to handle them
   * They’re always **thrown automatically** by Java and you don’t need to include them in your exception specifications
@@ -630,6 +662,8 @@ Date: 20/01/2024
 
 > Objects in heap are also resources, the real composition of the program are the references on stack
 
+* The finally block will not be executed if program exits (either by calling `System.exit()` or by causing a fatal error that causes the process to abort)
+
 * Try with resources
 
   * Java 7 feature
@@ -657,6 +691,8 @@ Date: 20/01/2024
   * Exceptions can be rethrown
     * Happen in the `catch` block
     * *Exception chaining*: Often you want to catch one exception and throw another, but still keep the information about the originating exception
+  * Exception propagation
+    * Exception bubbles up through the call stack if it is not caught
 
 > There is a pitfall in Java Exception implementation: lost exception
 >

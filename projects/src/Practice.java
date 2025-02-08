@@ -1,16 +1,21 @@
-import java.lang.*;
-
 public class Practice {
-    public static void main(String[] args) {
-        System.out.println("Hi");
+    int j=12;
+    void add()
+    {
+        j=j+12;
+        System.out.println("J="+j);
     }
 
-    private static boolean checkBinaryForm(String s) {
-        return s.matches("^[01]+$");
+    @Override
+    public void finalize()
+    {
+        System.out.println("Object is garbage collected");
     }
 
-    private static boolean checkDateForm(String s) {
-        return s.matches("^([0-3][0-9])/([0-1][0-9])/(\\d{4})$");
+    public static void main(String[] args) throws Exception {
+        new Practice().add();
+        System.gc();
+        new Practice().add();
+        System.out.println(Runtime.getRuntime().totalMemory());
     }
-
 }
