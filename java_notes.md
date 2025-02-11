@@ -1090,7 +1090,7 @@ Date: 20/01/2024
 * An *I/O Stream* represents an input source or an output destination
 * Streams support many different kinds of data, including simple bytes, primitive data types, localized characters, and objects
 * Some streams simply pass on data; others manipulate and transform the data in useful ways
-* The basic priciple
+* The basic principle
   * A stream is a sequence of data
   * A program uses an *input stream* to read data from a source, one item at a time
   * A program uses an *output stream* to write data to a destination, one item at time
@@ -1110,11 +1110,16 @@ Date: 20/01/2024
   * `int read(byte[]b, int off, int len)`
     * Reads up to `len` bytes of data from the input stream into buffer array `b`
     * The first byte read is stored into element `b[off]`, the next one into `b[off+1]`, and so on
+  * `byte[] readAllBytes()`
+    * Reads all remaining bytes from the input stream
+  * `long transferTo(OutputStream out)`
+    * Reads all bytes from this input stream and writes the bytes to the given output stream in the order that they are read
+    * Returns the number of bytes transferred
   * `int available()`
     * Returns an estimate of the number of bytes that can be read (or skipped over) from this input stream without blocking or `0` when it reaches the end of the input stream
   * `long skip(long n)`
     * Skips over and discards `n` bytes of data from this input stream
-    * Returns the actual number of bytes skipped.
+    * Returns the actual number of bytes skipped
   * `void mark(int limit)`
     * Marks the current position in this input stream. A subsequent call to the `reset` method repositions this stream at the last marked position so that subsequent reads re-read the same bytes
     * **Only works for buffered streams**
@@ -1140,15 +1145,13 @@ Date: 20/01/2024
     * Closes this output stream and releases any system resources associated with this stream
 * Hierarchy of byte streams
   * ![java.io](imgs/java.io.png)
-* `ByteArrayInputStream` and `ByteArrayOutputStream`
+* `ByteArrayInputStream`
   * `ByteArrayInputStream(byte[] buf)`
     * Creates a `ByteArrayInputStream` so that it uses `buf` as its buffer array
   * `ByteArrayInputStream(byte[] buf, int offset, int length)`
-  * `byte[] readAllBytes()`
-    * Reads all remaining bytes from the input stream
-  * `long transferTo(OutputStream out)`
-    * Reads all bytes from this input stream and writes the bytes to the given output stream in the order that they are read
-    * Returns the number of bytes transferred
+* `ByteArrayOutputStream`
+  * `ByteArrayOutputStream()`
+  * `ByteArrayOutputStream(int size)`
   * `byte[] toByteArray()`
   * `void writeTo(OutputStream out)`
     * Writes the complete contents of this byte array output stream to the specified output stream argument
@@ -1160,8 +1163,7 @@ Date: 20/01/2024
 * Character streams are often "wrappers" for byte streams
 * The character stream uses the byte stream to perform the physical I/O, while the character stream handles translation between characters and bytes
 * `Reader` methods
-  * `long transferTo(Writer out)`
-    * Reads all characters from this reader and writes the characters to the given writer in the order that they are read
+  * Similar to `InputStream`
   * Don't have `available()`
 * `Writer` methods
   * `Writer append(char c)`
@@ -1189,8 +1191,8 @@ Date: 20/01/2024
 * A program can convert an unbuffered stream into a buffered stream using the *wrapping idiom*
 
   * ```java
-    inputStream = new BufferedReader(new FileReader("xanadu.txt"));
-    outputStream = new BufferedWriter(new FileWriter("characteroutput.txt"));
+    in = new BufferedReader(new FileReader("xanadu.txt"));
+    out = new BufferedWriter(new FileWriter("characteroutput.txt"));
     ```
 
 * `BufferedInputStream` and `BufferedOutputStream`
@@ -1202,6 +1204,8 @@ Date: 20/01/2024
 * `PrintWriter`, `PrintStream`
   * The only `PrintStream` objects you are likely to need are `System.out` and `System.error`
   * When you need to create a formatted output stream, instantiate `PrintWriter`, not `PrintStream`
+  * `PrintStream` never throws an `IOException`
+  * `PrintStream` can be created so as to flush automatically; this means that the `flush` method of the underlying output stream is automatically invoked after a byte array is written, one of the `println` methods is invoked, or a newline character or byte (`'\n'`) is written
   * `void print()`
     * `String.valueOf()` is invoked, and then the string's characters are converted into bytes according to the default charset, and these bytes are written in exactly the manner of the `write(int)`.
   * `void println()`
@@ -1210,6 +1214,8 @@ Date: 20/01/2024
 * `Scanner`
   * Useful for breaking down formatted input into tokens and translating individual tokens according to their data type
   * By default, a scanner uses white space (*include blanks, tabs, and line terminators*) to separate tokens
+    * `Scanner useDelimiter(String pattern)`
+    * `Scanner useDelimiter(Pattern pattern)`
   * A scanning operation (`next()` or `hasNext()`) may block waiting for input
   * Even though a scanner is not a stream, you need to close it to indicate that you're done with its underlying stream
 
@@ -1224,6 +1230,7 @@ Date: 20/01/2024
 ### Object Streams
 
 * Serialisation and deserialisation
+  * Serialization in Java is a mechanism of writing the state of an object into a byte stream
   * Storing and retrieving the state of an object
   * Most, but not all, standard classes support serialization of their objects
   * Rules

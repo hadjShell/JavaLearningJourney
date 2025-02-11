@@ -1,10 +1,33 @@
 import java.io.*;
 import java.util.Arrays;
+import java.util.Scanner;
 import java.util.UUID;
 
 public class StreamPlayground {
     public static void main(String[] args) throws Exception {
-        System.out.println(System.in.getClass());
+        consoleTest();
+//        System.out.println(System.in.getClass());
+//        byte[] a = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+//        byte[] b;
+//        ByteArrayInputStream in = new ByteArrayInputStream(a);
+//        ByteArrayOutputStream out = new ByteArrayOutputStream();
+//        in.mark(0);
+//        System.out.println(in.read());
+//        System.out.println(in.read());
+//        System.out.println(in.read());
+//        in.skip(3);
+//        System.out.println(in.read());
+//        in.reset();
+//        System.out.println(in.available());
+//        in.transferTo(out);
+//        out.write(99);
+//        b = out.toByteArray();
+//        for (byte n : b) {
+//            System.out.println(n);
+//        }
+//        Scanner sc = new Scanner(System.in).useDelimiter(",");
+//        System.out.println(sc.nextInt());
+//        System.out.println(sc.nextInt());
     }
 
     private static void copyFile(String path) throws IOException {
