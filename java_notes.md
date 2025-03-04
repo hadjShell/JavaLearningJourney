@@ -435,9 +435,14 @@ Date: 20/01/2024
   * Java 8 feature
   * Make refactoring interface easier
   * Java 9 allows `private` methods in interface that can be used in `default` methods inside interface
-* Marker Interface
-  * Has no member fields or methods
-  * Eg. `Serializable`, `Cloneable`
+* Type of Interface
+  * Normal interface
+  * Functional Interface
+    * Has only one abstract function
+
+  * Marker Interface
+    * Has no member fields or methods
+    * Eg. `Serializable`, `Cloneable`
 
 
 
@@ -1779,7 +1784,7 @@ Date: 20/01/2024
 ### Collections to Array
 
 * `<T> T[] toArray(T[] array)`
-  * Must pass a specific type array of length 0
+  * Pass a specific type array of length 0
 
 ### Array to Collections
 
@@ -1819,6 +1824,12 @@ Date: 20/01/2024
 
 ***
 
+## Stream API
+
+* 
+
+***
+
 ## Networking Programming
 
 * `Socket`, `ServerSocket`
@@ -1832,6 +1843,14 @@ Date: 20/01/2024
 * JDBC is an API used in java programming to interact with databases
 * Java Database Connectivity
 * ![JDBC](imgs/JDBC.png)
+* Steps
+  1. Import packages
+  2. Load driver
+  3. Register driver
+  4. Create connection
+  5. Create statement
+  6. Execute statement
+  7. Close
 
 ### JDBC Drivers
 
@@ -1907,8 +1926,6 @@ Date: 20/01/2024
     }
   }
   ```
-
-* 
 
 ***
 
