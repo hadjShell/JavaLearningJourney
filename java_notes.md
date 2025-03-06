@@ -1929,6 +1929,13 @@ Date: 20/01/2024
 
 ***
 
+## Hibernate
+
+* A Java-based ORM framework (Object-Ralational Mapping)
+* 
+
+***
+
 ## JavaDoc
 
 * Tags
