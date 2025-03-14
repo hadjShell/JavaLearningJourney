@@ -628,11 +628,11 @@ Date: 20/01/2024
 
   * Considered as unchecked exceptions
 
-* Checked exceptions: you must handle them *at compile time*
+* **Checked exceptions**: you must handle them *at compile time*
 
 *  `RuntimeException`
 
-  * Unchecked exceptions: you don't have to handle them
+  * **Unchecked exceptions**: you don't have to handle them
   * They’re always **thrown automatically** by Java and you don’t need to include them in your exception specifications
   * If a `RuntimeException` gets all the way out to `main( )` **without being caught**, `printStackTrace( )` is called for that exception as the program exits; the output is reported to `System.err`
 
